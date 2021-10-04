@@ -1,4 +1,4 @@
-import { init, MongoClient } from "https://deno.land/x/mongo@v0.8.0/mod.ts";
+import { init, MongoClient } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 
 class DB {
   public client: MongoClient;
