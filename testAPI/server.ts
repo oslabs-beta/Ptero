@@ -1,12 +1,12 @@
-import { Application } from "https://deno.land/x/abc@v1.3.3/mod.ts";
-import "https://deno.land/x/dotenv/load.ts";
-//import router
-
-import { ErrorMiddleware, LogMiddleware } from "./utils/middlewares.ts";
+import { Application, send } from "https://deno.land/x/oak/mod.ts";
 
 const app = new Application();
-//route anything OK to router
 
-//route 404 to 404 not found
+app.use(async (context) => {
+  await send(context, context.request.url.pathname, {
+    root: `${Deno.cwd()}/Client/public`,
+    index: "index.html",
+  });
+});
 
-console.log(`server listening on http://localhost:5000`);
+await app.listen({ port: 8000 });
