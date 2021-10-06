@@ -1,21 +1,26 @@
-import { Context, MiddlewareFunc } from "https://deno.land/x/abc@v1.3.3/mod.ts";
+import {
+  Application,
+  isHttpError,
+  Status,
+} from "https://deno.land/x/oak/mod.ts";
 
-export class ErrorHandler extends Error {
-  status: number;
-  constructor(message: string, status: number) {
-    super(message);
-    this.status = status;
-  }
-}
+const app = new Application();
 
-// ErrorHandler - Middleware
-export const ErrorMiddleware: MiddlewareFunc = (next) =>
-  async (c) => {
-    try {
-      await next(c);
-    } catch (err) {
-      const error = err as ErrorHandler;
-      c.response.status = error.status || 500;
-      c.response.body = error.message;
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    if (isHttpError(err)) {
+      switch (err.status) {
+        case Status.NotFound:
+          // handle NotFound
+          break;
+        default:
+          // handle other statuses
+      }
+    } else {
+      // rethrow if you can't handle the error
+      throw err;
     }
-  };
+  }
+});
