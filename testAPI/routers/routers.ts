@@ -27,9 +27,15 @@ testRouter.post("/characters", async (ctx:any, next: any) => {
 });
 
 testRouter.put("/characters/:id", async (ctx:any, next: any) => {
-
+  await updateCharacter(ctx, next);
 });
 
-testRouter.delete("/characters/:id", deleteCharacter);
+testRouter.delete("/characters/:id", async (ctx:any, next: any) => {
+  await deleteCharacter(ctx, next);
+});
+
+testRouter.get("/films", async (ctx: any, next: any) => {
+  await getFilms(ctx, next)
+});
 
 export default testRouter;

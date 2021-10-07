@@ -63,7 +63,7 @@ export const addCharacter = async (ctx: any, next: any) => {
   try {
     const body = await ctx.request.body();
     const { name, mass, hair_color, skin_color, eye_color, birth_year, gender, species, homeworld, height } = await body.value;
-    
+
     await people.insertOne({
       name: name, 
       mass: mass, 
@@ -91,23 +91,54 @@ export const addCharacter = async (ctx: any, next: any) => {
   }
 }
 
-export const updateCharacter = ({ response }: { response: any}) => {
+export const updateCharacter = async ( ctx: any, next: any ) => {
+  try {
+    const id = ctx.params.id;
+    const body = await ctx.request.body();
+    const { name } = await body.value;
   
+    await people.updateOne( 
+      { _id: new Bson.ObjectId(id) },
+      { $set: { name: name } },
+    );
+    
+    ctx.response.body = {
+      status: true,
+      message: 'Updated existing character'
+    }
+    ctx.response.status = 200;
+    await next();
+  }
+  catch (err) {
+    ctx.response.body = { status: false, message: 'failed to create new character' };
+    ctx.response.status = 500;
+    console.log(err);
+  }
 }
 
-export const deleteCharacter = ({ response }: { response: any}) => {
-  
+export const deleteCharacter = async ( ctx: any, next: any ) => {
+  try{
+    const id = ctx.params.id;
+    // const person = people.findOne({ _id : id });
+
+    await people.deleteOne({ _id: new Bson.ObjectId(id) });
+
+    ctx.response.body = {
+      status: true,
+      message: 'Deleted Charcter Successfully'
+    }
+    ctx.response.status = 200;
+    await next();
+  }
+  catch (err) {
+    ctx.response.body = { 
+      status: false, 
+      message: 'failed to delete a character' 
+    };
+    ctx.response.status = 500;
+    console.log(err);
+  }
 }
-
-
-// export const updateCharacter = ({ response }: { response: any}) => {
-  
-// }
-
-// export const deleteCharacter = ({ response }: { response: any}) => {
-  
-// }
-
 
 // //Example of controller
 // export const createContact: HandlerFunc = async (c: Context) => {
