@@ -1,25 +1,32 @@
 <script>
 	import { page } from '$app/stores';
-	//import { MDBBtn } from 'mdbsvelte';
+	import { Button, Offcanvas } from 'sveltestrap';
+	let open = false;
 </script>
 
 <header>
-	<nav>
-		<ul>
-			<li class:active={$page.path === '/'}>
-				<a href="/">Home</a>
-			</li>
-			<li class:active={$page.path === '/graphs'}>
-				<a href="/graphs">Graphs</a>
-			</li>
-			<li class:active={$page.path === '/graphsTests'}>
-				<a href="/graphsTests">Graphs Test</a>
-			</li>
-			<li class:active={$page.path === '/settings'}>
-				<a href="/settings">Settings</a>
-			</li>
-		</ul>
-	</nav>
+	<div>
+		<Button color="light" on:click={() => (open = true)}>Menu</Button>
+		<Offcanvas header="Ptero" scroll isOpen={open}>
+			<Button color="danger" on:click={() => (open = false)}>Close Menu</Button>
+			<nav>
+				<ul>
+					<li class:active={$page.path === '/'}>
+						<a href="/">Home</a>
+					</li>
+					<li class:active={$page.path === '/graphs'}>
+						<a href="/graphs">Graphs</a>
+					</li>
+					<li class:active={$page.path === '/graphsTests'}>
+						<a href="/graphsTests">Graphs Test</a>
+					</li>
+					<li class:active={$page.path === '/settings'}>
+						<a href="/settings">Settings</a>
+					</li>
+				</ul>
+			</nav>
+		</Offcanvas>
+	</div>
 </header>
 
 <style>
@@ -29,10 +36,7 @@
 	}
 	nav {
 		background: var(--bg-color);
-		/* box-shadow: 2px 5px 10px var(--shadow-color); */
-		/* padding: 1em; */
 		justify-content: flex-end;
-		/* border-radius: 30px 0 30px 30px; */
 	}
 	ul {
 		display: flex;
