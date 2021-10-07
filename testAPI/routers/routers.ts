@@ -2,7 +2,10 @@ import { Router } from "https://deno.land/x/oak/mod.ts";
 
 import {
   getCharacters,
+  getOneCharacter,
   addCharacter,
+  updateCharacter,
+  deleteCharacter,
 } from "../controllers/controllers.ts";
 
 const testRouter = new Router();
@@ -11,14 +14,22 @@ testRouter.get("/", ctx => {
   ctx.response.body = "hello ptero";
 })
 
-testRouter.get("/characters", async(ctx: any, next: any) => {
-  console.log("we are in getCharacter route")
+testRouter.get("/characters", async (ctx: any, next: any) => {
   await getCharacters(ctx, next);
-  console.log("after getCharacters");
 });
-// testRouter.get("/characters/:id", getCharacter);
-testRouter.post("/characters", addCharacter);
-// testRouter.put("/characters/:id", updateCharacter);
-// testRouter.delete("/characters/:id", deleteCharacter);
+
+testRouter.get("/characters/:id", async (ctx:any, next: any) => {
+  await getOneCharacter(ctx, next);
+});
+
+testRouter.post("/characters", async (ctx:any, next: any) => {
+  await addCharacter(ctx, next)  
+});
+
+testRouter.put("/characters/:id", async (ctx:any, next: any) => {
+
+});
+
+testRouter.delete("/characters/:id", deleteCharacter);
 
 export default testRouter;

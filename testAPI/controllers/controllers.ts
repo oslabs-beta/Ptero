@@ -1,13 +1,13 @@
 import { RouterContext } from "https://deno.land/x/oak/mod.ts";
 import   { db, people }   from "../models/db.ts";
 import { ErrorHandler } from "../utils/middlewares.ts";
+import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 // const database = db.getDatabase;
 // const collection = database.collection("collection"); // to update with collection
 
 //interface Collection?
 
 export const getCharacters = async (ctx: any, next: any) => { 
-  console.log("in controller getpeople")
   // const all_users = await users.find({ username: { $ne: null } }).toArray();
   //const users = db.collection<UserSchema>("users");
   try {
@@ -16,8 +16,6 @@ export const getCharacters = async (ctx: any, next: any) => {
       status: true,
       data: data
     };
-
-    console.log("data is", data);
     ctx.response.status = 200;
     await next()
   }
@@ -27,28 +25,80 @@ export const getCharacters = async (ctx: any, next: any) => {
     console.log(err);
   }
 };
-
-//from tutorial
-// const peopleCollection = db.collection('people');
-
-// export const getpeople = async (ctx: RouterContext) => {
-//   console.log('in the tutorial get people controller')
-//   const people = await peopleCollection.find();
-//   ctx.response.body = people;
-// }
-
-
-// export const getCharacter = async ({ params, response }: { params: { name: string }; response: any }) => {
-  
-// }
-
-export const addCharacter = (ctx: any) => {
+// const user1_id = await users.findOne({
+// _id: new Bson.ObjectId("SOME OBJECTID STRING"),
+// });
+export const getOneCharacter = async (ctx: any, next: any) => {
   try {
-  }
-  catch(err){
+    const id = ctx.params.id;
+    const data: any = await people.findOne({ _id: new Bson.ObjectId(id)}, { noCursorTimeout: false });
 
+    ctx.response.body = {
+      status: true,
+      data: data,
+    }
+    ctx.response.status = 200;
+    await next();    
+  }
+  catch(err) {
+    ctx.response.body = { status: false, data: null };
+    ctx.response.status = 500;
+    console.log(err);
   }
 }
+
+//   _id: { $oid: string },
+//   name: string,
+//   mass: string,
+//   hair_color: string,
+//   skin_color: string,
+//   eye_color: string,
+//   birth_year: string,
+//   gender : string,
+//   species: string,
+//   homeworld: string,
+//   height: number,
+
+export const addCharacter = async (ctx: any, next: any) => {
+  try {
+    const body = await ctx.request.body();
+    const { name, mass, hair_color, skin_color, eye_color, birth_year, gender, species, homeworld, height } = await body.value;
+    
+    await people.insertOne({
+      name: name, 
+      mass: mass, 
+      hair_color: hair_color, 
+      skin_color: skin_color, 
+      eye_color: eye_color, 
+      birth_year: birth_year, 
+      gender: gender, 
+      species: species, 
+      homeworld: homeworld, 
+      height: height,
+    });
+
+    ctx.response.body = {
+      status: true,
+      message: 'Created new character'
+    }
+    ctx.response.status = 201;
+    await next();
+  }
+  catch (err) {
+    ctx.response.body = { status: false, message: 'failed to create new character' };
+    ctx.response.status = 500;
+    console.log(err);
+  }
+}
+
+export const updateCharacter = ({ response }: { response: any}) => {
+  
+}
+
+export const deleteCharacter = ({ response }: { response: any}) => {
+  
+}
+
 
 // export const updateCharacter = ({ response }: { response: any}) => {
   

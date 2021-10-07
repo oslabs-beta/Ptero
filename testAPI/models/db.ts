@@ -26,7 +26,7 @@ const client = new MongoClient();
 await client.connect(dbHostUrl);
 
 interface CharacterSchema {
- _id: { $oid: string },
+  _id: { $oid: string },
   name: string,
   mass: string,
   hair_color: string,
@@ -36,7 +36,7 @@ interface CharacterSchema {
   gender : string,
   species: string,
   homeworld: string,
-  height: number
+  height: number,
 }
 
 const db = client.database(dbName);
