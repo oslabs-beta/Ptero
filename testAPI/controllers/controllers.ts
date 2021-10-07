@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak/mod.ts";
-import   { db, people }   from "../models/db.ts";
+import   { db, people, films, species, planets }   from "../models/db.ts";
 import { ErrorHandler } from "../utils/middlewares.ts";
 import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 // const database = db.getDatabase;
@@ -135,6 +135,65 @@ export const deleteCharacter = async ( ctx: any, next: any ) => {
       status: false, 
       message: 'failed to delete a character' 
     };
+    ctx.response.status = 500;
+    console.log(err);
+  }
+}
+  //  _id: { $oid: string },
+  // title: string,
+  // episode_id: number,
+  // opening_crawl: string,
+  // director: string,
+  // producer: string,
+  // release_date: Date,
+  // __v: number,
+
+export const getFilms = async (ctx: any, next: any) => {
+  try {
+    const data: any = await films.find({}, { noCursorTimeout: false }).toArray();
+    ctx.response.body = {
+      status: true,
+      data: data
+    };
+    ctx.response.status = 200;
+    await next()
+  }
+  catch (err) {
+    ctx.response.body = { status: false, data: null };
+    ctx.response.status = 500;
+    console.log(err);
+  }
+}
+
+export const getPlanets = async (ctx: any, next: any) => {
+  try {
+    const data: any = await planets.find({}, { noCursorTimeout: false }).toArray();
+    ctx.response.body = {
+      status: true,
+      data: data
+    };
+    ctx.response.status = 200;
+    await next()
+  }
+  catch (err) {
+    ctx.response.body = { status: false, data: null };
+    ctx.response.status = 500;
+    console.log(err);
+  }
+}
+
+export const getSpecies = async (ctx: any, next: any) => {
+  try {
+    const data: any = await species.find({}, { noCursorTimeout: false }).toArray();
+    ctx.response.body = {
+      status: true,
+      data: data
+    };
+    ctx.response.status = 200;
+    await next()
+  }
+  catch (err) {
+    ctx.response.body = { status: false, data: null };
     ctx.response.status = 500;
     console.log(err);
   }
