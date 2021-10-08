@@ -32,9 +32,11 @@
 				<NavLink href="/graphs">Graphs</NavLink>
 			</NavItem>
 			<NavItem>
+			</NavItem>
+			<NavItem>
 				<NavLink href="/settings">Settings</NavLink>
 			</NavItem>
-			<Dropdown nav inNavbar>
+			<!-- <Dropdown nav inNavbar>
 				<DropdownToggle nav caret>Options</DropdownToggle>
 				<DropdownMenu end>
 					<DropdownItem>Option 1</DropdownItem>
@@ -42,7 +44,7 @@
 					<DropdownItem divider />
 					<DropdownItem>Reset</DropdownItem>
 				</DropdownMenu>
-			</Dropdown>
+			</Dropdown> -->
 		</Nav>
 	</Collapse>
 </Navbar>
