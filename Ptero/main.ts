@@ -4,6 +4,7 @@ import {
   RouterContext,
   send,
 } from "https://deno.land/x/oak/mod.ts";
+import { redisCheck, redisSet } from "./utils/redis.ts";
 import pteroRouter from "./routers/routers.ts";
 
 const env = Deno.env.toObject();
@@ -20,6 +21,22 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
 });
 
+// Caching
+app.use(async (ctx, next) => {
+  const method: string = ctx.request.method;
+  const reqURL: string = ctx.request.url.pathname;
+  console.log("request Method", method);
+  console.log("request URL", reqURL);
+  if (await redisCheck(ctx, next) === true) {
+    console.log("Main await redisCheck === true");
+  } else {
+    console.log("Main await redisCheck !== true");
+    await next();
+    app.use(pteroRouter.prefix("/api").routes());
+    await redisSet(ctx, next);
+  }
+});
+
 // Timing
 app.use(async (ctx, next) => {
   const start = Date.now();
@@ -28,7 +45,7 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
-app.use(pteroRouter.prefix("/api").routes());
+// app.use(pteroRouter.prefix("/api").routes());
 
 //Serve
 // app.use(async (context) => {
