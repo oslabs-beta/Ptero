@@ -2,7 +2,8 @@ import { v4 } from "https://deno.land/std/uuid/mod.ts";
 import { Dinosaur } from "../types/types.ts";
 import { Dinosaurs } from "../models/dinosaurs.ts";
 
-const getDinosaurs = ({ response }: { response: any }) => {
+const getDinosaurs = async ({ response }: { response: any }) => {
+  console.log("getDinosaurs triggered");
   response.body = {
     success: true,
     data: Dinosaurs,
