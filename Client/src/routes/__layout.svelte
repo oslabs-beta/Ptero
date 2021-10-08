@@ -11,7 +11,7 @@
 <style>
 	main {
 		color: whitesmoke;
-		background-color: rgb(47, 47, 47);
+		background-color: var(--background-color);
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;

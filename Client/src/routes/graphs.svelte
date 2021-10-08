@@ -6,26 +6,27 @@
 
 <header>
 	<div>
+		
 		<Button color="light" on:click={() => (open = true)}>Menu</Button>
 		<Offcanvas header="Ptero" scroll isOpen={open}>
 			<Button color="danger" on:click={() => (open = false)}>Close Menu</Button>
+		</Offcanvas>
 			<nav>
 				<ul>
 					<li class:active={$page.path === '/'}>
 						<a href="/">Home</a>
 					</li>
-					<li class:active={$page.path === '/graphs'}>
-						<a href="/graphs">Graphs</a>
+					<li class:active={$page.path === '/graph1'}>
+						<a href="/graph1">Graph 1</a>
 					</li>
-					<li class:active={$page.path === '/graphsTests'}>
-						<a href="/graphsTests">Graphs Test</a>
+					<li class:active={$page.path === '/graph2'}>
+						<a href="/graph2">Graph 2</a>
 					</li>
-					<li class:active={$page.path === '/settings'}>
-						<a href="/settings">Settings</a>
+					<li class:active={$page.path === '/graph3'}>
+						<a href="/graph3">Graph 3</a>
 					</li>
 				</ul>
 			</nav>
-		</Offcanvas>
 	</div>
 </header>
 

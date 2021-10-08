@@ -28,7 +28,7 @@
 </script>
 
 <section>
-	<h1>Graphs</h1>
+	<h1>Graphs 1 Page</h1>
 	<svg>
 		{#each data2 as d}
 			<circle cx={d.x + '%'} cy="50%" r={d.r} fill="white" />
@@ -38,6 +38,7 @@
 </section>
 
 <style>
+	
 	.chart :global(div) {
 		font: 10px sans-serif;
 		background-color: steelblue;
@@ -46,4 +47,9 @@
 		margin: 1px;
 		color: white;
 	}
+	section {
+		/* background-color: var(--accent-color) */
+	}
+
+	
 </style>
