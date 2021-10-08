@@ -6,9 +6,10 @@ const redisCheck = async (ctx: any, next: any) => {
   console.log("cache is:", await cached, "that thing");
   if (cached) {
     console.log("It's in the cache");
-    ctx.response = JSON.parse(cached);
+    ctx.response.body = JSON.parse(cached);
     return true;
-  } else {
+  } 
+  else {
     console.log("It's not in the cache");
     return false;
   }
@@ -16,7 +17,7 @@ const redisCheck = async (ctx: any, next: any) => {
 
 const redisSet = async (ctx: any, next: any) => {
   const url = ctx.request.url.pathname;
-  const resp = await ctx.response;
+  const resp = await ctx.response.body;
   const respJSON = await JSON.stringify(resp);
   console.log(resp);
   await redisClient.set(`${url}`, respJSON);
