@@ -43,19 +43,12 @@ app.use(async (ctx, next) => {
   else {
     console.log("Main await redisCheck !== true");
     await next();
-    app.use(pteroRouter.prefix("/api").routes());
+    // app.use(pteroRouter.prefix("/api").routes());
     await redisSet(ctx, next);
   }
 });
 
 app.use(pteroRouter.prefix("/api").routes());
-
-// global error handling
-router.get("/(.*)", async (ctx: any) => {      
-  ctx.response.status = 404;
-  ctx.response.body = "404 | Page not Found";
-});
-
 
 //Serve
 // app.use(async (context) => {
@@ -65,11 +58,14 @@ router.get("/(.*)", async (ctx: any) => {
 //   });
 // });
 
-// global error handler
-
-
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+// global error handling
+router.get("/(.*)", async (ctx: any) => {      
+  ctx.response.status = 404;
+  ctx.response.body = "404 | Page not Found";
+});
 
 console.log(`Server running on port ${PORT}`);
 await app.listen(`${HOST}:${PORT}`);

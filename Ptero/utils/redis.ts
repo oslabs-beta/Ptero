@@ -16,11 +16,14 @@ const redisCheck = async (ctx: any, next: any) => {
 };
 
 const redisSet = async (ctx: any, next: any) => {
-  const url = ctx.request.url.pathname;
-  const resp = await ctx.response.body;
-  const respJSON = await JSON.stringify(resp);
-  console.log(resp);
-  await redisClient.set(`${url}`, respJSON);
+  if(ctx.response.status === 200) {
+    const url = ctx.request.url.pathname;
+    const resp = await ctx.response.body;
+    const respJSON = await JSON.stringify(resp);
+    console.log(resp);
+    await redisClient.set(`${url}`, respJSON);
+    // define a time to live to avoid flooding the cache;
+  } 
 };
 
 export { redisCheck, redisSet };
