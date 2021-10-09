@@ -15,26 +15,11 @@ const app = new Application();
 const router = new Router();
 
 // Logger
+
 app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.headers.get("X-Response-Time");
   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
-});
-
-// Caching
-app.use(async (ctx, next) => {
-  const method: string = ctx.request.method;
-  const reqURL: string = ctx.request.url.pathname;
-  console.log("request Method", method);
-  console.log("request URL", reqURL);
-  if (await redisCheck(ctx, next) === true) {
-    console.log("Main await redisCheck === true");
-  } else {
-    console.log("Main await redisCheck !== true");
-    await next();
-    app.use(pteroRouter.prefix("/api").routes());
-    await redisSet(ctx, next);
-  }
 });
 
 // Timing
@@ -45,7 +30,25 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
-// app.use(pteroRouter.prefix("/api").routes());
+// caching
+
+app.use(async (ctx, next) => {
+  const method: string = ctx.request.method;
+  const reqURL: string = ctx.request.url.pathname;
+  console.log("request Method", method);
+  console.log("request URL", reqURL);
+  if (await redisCheck(ctx, next) === true) {
+    console.log("Main await redisCheck === true");
+  }
+  else {
+    console.log("Main await redisCheck !== true");
+    await next();
+    // app.use(pteroRouter.prefix("/api").routes());
+    await redisSet(ctx, next);
+  }
+});
+
+app.use(pteroRouter.prefix("/api").routes());
 
 //Serve
 // app.use(async (context) => {
@@ -57,6 +60,12 @@ app.use(async (ctx, next) => {
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+// global error handling
+router.get("/(.*)", async (ctx: any) => {      
+  ctx.response.status = 404;
+  ctx.response.body = "404 | Page not Found";
+});
 
 console.log(`Server running on port ${PORT}`);
 await app.listen(`${HOST}:${PORT}`);
