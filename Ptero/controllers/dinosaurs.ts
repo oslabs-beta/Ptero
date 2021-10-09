@@ -4,11 +4,20 @@ import { Dinosaurs } from "../models/dinosaurs.ts";
 
 const getDinosaurs = async ({ response }: { response: any }) => {
   console.log("getDinosaurs triggered");
-  response.body = {
-    success: true,
-    data: Dinosaurs,
-  };
-};
+  if(response.status === 200) {
+    response.body = {
+      success: true,
+      data: Dinosaurs,
+    };
+  }
+  else {
+    response.body = {
+      success: false,
+      msg: "Wrong API key",
+    };
+  }
+}
+  
 
 const getDinosaur = (
   { params, response }: { params: { id: string }; response: any },
@@ -22,6 +31,7 @@ const getDinosaur = (
       success: true,
       data: selectedDino,
     };
+    
   } else {
     response.status = 404;
     response.body = {
