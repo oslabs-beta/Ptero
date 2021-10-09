@@ -1,22 +1,46 @@
 <script context="module">
-	export const prerender = true;
+	import { Card } from 'sveltestrap';
+	// export const prerender = true;
+	import { Button, Offcanvas } from 'sveltestrap';
+	let open = false;
 </script>
 
 <section>
-	<h1>Welcome to Ptero!</h1>
-	<h2>Watch your Deno take off!</h2>
+	<div class="overviewWindow">
+		<div class="widget" />
+		<div class="widget" />
+		<div class="widgetNumbers">
+			<div class="numbers" />
+			<div class="numbers" />
+			<div class="numbers" />
+		</div>
+		<div class="widget" />
+		<div class="widget" />
+		<div class="widget" />
+	</div>
 </section>
 
 <style>
-	h1 {
-		color: var(--main-color);
-		font-size: 2em;
+	section {
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		flex-grow: 1;
 	}
-	h2 {
-		color: var(--accent-color);
-		font-size: 1.5em;
+	.overviewWindow {
+		padding: 2em;
+		gap: 2em;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 	}
-	/* section {
-		background-color: black;
-	} */
+	.widget {
+		height: 26.5vh;
+		width: 47vw;
+		background-color: var(--bs-dark);
+	}
+	.widgetNumbers{
+		height: 26.5vh;
+		width: 47vw;
+		background-color: var(--bs-dark);
+	}
 </style>

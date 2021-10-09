@@ -1,73 +1,47 @@
-<script>
-	import { page } from '$app/stores';
+<script lang="ts">
 	import { Button, Offcanvas } from 'sveltestrap';
 	let open = false;
+	const toggle = () => (open = !open);
 </script>
 
-<header>
-	<div>
-		
-		<Button color="light" on:click={() => (open = true)}>Menu</Button>
-		<Offcanvas header="Ptero" scroll isOpen={open}>
-			<Button color="danger" on:click={() => (open = false)}>Close Menu</Button>
-		</Offcanvas>
-			<nav>
-				<ul>
-					<li class:active={$page.path === '/'}>
-						<a href="/">Home</a>
-					</li>
-					<li class:active={$page.path === '/graph1'}>
-						<a href="/graph1">Graph 1</a>
-					</li>
-					<li class:active={$page.path === '/graph2'}>
-						<a href="/graph2">Graph 2</a>
-					</li>
-					<li class:active={$page.path === '/graph3'}>
-						<a href="/graph3">Graph 3</a>
-					</li>
-				</ul>
-			</nav>
+<section>
+	<Offcanvas style="background-color:var(--bs-dark)" scroll isOpen={open} {toggle}>
+		<h1 slot="header">
+			<i>Hello <b>World!</b></i>
+		</h1>
+	</Offcanvas>
+	<Button style="align-self:center; position:absolute; left: 0px" color="danger" on:click={toggle}
+		>O</Button
+	>
+	<div id="graphs">
+		<div class="graph" />
+		<div class="graph" />
+		<div class="graph" />
+		<div class="graph" />
+		<div class="graph" />
+		<div class="graph" />
 	</div>
-</header>
+</section>
 
 <style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
-	nav {
-		background: var(--bg-color);
-		justify-content: flex-end;
-	}
-	ul {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: var(--base);
-	}
-	li {
-		list-style-type: none;
-	}
-	a {
-		text-shadow: var(--shadow-text);
-		color: steelblue;
-		margin: 2em;
-	}
-	a:visited,
-	a:hover {
-		text-decoration: none;
-		font-family: 'Montserrat', sans-serif;
-		/* color: inherit; */
-	}
-	a:focus {
+	h1 {
 		color: white;
 	}
-	.active {
-		border-bottom: 2px solid var(--accent-color);
-		height: 5em;
+	section {
+		display: flex;
+		align-items: stretch;
 		justify-content: center;
-		background-color: var(--background-color);
-		color: white;
-		border-radius: 10px 0 0 10px;
+		flex-grow: 1;
+	}
+	#graphs {
+		padding: 2em;
+		gap: 2em;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.graph {
+		height: 26.5vh;
+		width: 47vw;
+		background-color: var(--bs-dark);
 	}
 </style>

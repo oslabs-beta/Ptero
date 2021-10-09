@@ -38,7 +38,6 @@
 </section>
 
 <style>
-	
 	.chart :global(div) {
 		font: 10px sans-serif;
 		background-color: steelblue;
@@ -47,9 +46,4 @@
 		margin: 1px;
 		color: white;
 	}
-	section {
-		/* background-color: var(--accent-color) */
-	}
-
-	
 </style>

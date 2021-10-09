@@ -3,13 +3,10 @@
 </script>
 
 <section>
-	<TabContent vertical pills>
-		<TabPane tabId="alpha" tab="Alpha" active>
+	<TabContent vertical>
+		<TabPane style="background-color:var(--bs-dark); flex-grow:1" tabId="alpha" tab="Alpha" active>
 			<h2>Alpha</h2>
-			<img
-				alt="Alpha Flight"
-				src="https://upload.wikimedia.org/wikipedia/en/4/49/Alpha_Flight_cast_picture_%28John_Byrne_era%29.gif"
-			/>
+			<div class="settingWindow">HELLO</div>
 		</TabPane>
 		<TabPane tabId="bravo" tab="Bravo">
 			<h2>Bravo</h2>
@@ -32,11 +29,27 @@
 				src="https://cdn.discordapp.com/attachments/894324663444979742/895447059736440833/david.PNG"
 			/>
 		</TabPane>
+		<TabPane tabId="david" tab="David" active>
+			<h2>David</h2>
+			<img
+				alt="David"
+				src="https://cdn.discordapp.com/attachments/894324663444979742/895447059736440833/david.PNG"
+			/>
+		</TabPane>
 	</TabContent>
 </section>
 
 <style>
 	section {
-		height: 100%;
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
+		flex-grow: 1;
+		padding: 2em;
+	}
+	.settingWindow {
+		height: 84vh;
+		width: 84vh;
+		background-color: var(--bs-dark);
 	}
 </style>
