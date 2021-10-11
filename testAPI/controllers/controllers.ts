@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak/mod.ts";
-import   { db, people, films, species, planets }   from "../models/db.ts";
+import { db, people, films, species, planets }   from "../models/db.ts";
 import { ErrorHandler } from "../utils/middlewares.ts";
 import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 // const database = db.getDatabase;
