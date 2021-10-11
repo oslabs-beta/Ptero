@@ -7,22 +7,49 @@ import {
   updateDinosaur,
 } from "../controllers/dinosaurs.ts";
 
-import { checkApiKey, caching } from '../utils/middlewares.ts'
+import { checkApiKey, caching, cachingUser } from '../utils/middlewares.ts'
+import { delay } from "https://deno.land/std/async/mod.ts";
+import { logData } from '../utils/dataLogging.ts'
 
 const pteroRouter = new Router();
 
 pteroRouter.get("/dinosaurs", async(ctx:any, next:any) => {
-  await checkApiKey(ctx);
-  if(ctx.response.status !== 202) return; 
-  await caching(ctx)
-  if(ctx.response.status !== 200) return; 
-  await getDinosaurs(ctx);
-  await caching(ctx)
+  await cachingUser(ctx);
+  
+  if(ctx.response.status === 401) return;
+
+  await caching(ctx, getDinosaurs);
+ 
 });
 
-pteroRouter.get("/dinosaurs/:id", getDinosaur);
-pteroRouter.post("/dinosaurs", addDinosaur);
-pteroRouter.put("/dinosaurs/:id", updateDinosaur);
-pteroRouter.delete("/dinosaurs/:id", deleteDinosaur);
+pteroRouter.get("/dinosaurs/:id", async(ctx:any, next:any) => {
+  await cachingUser(ctx);
+
+  if(ctx.response.status === 401) return;
+
+  await caching(ctx, getDinosaur);
+});
+
+pteroRouter.post("/dinosaurs", async(ctx:any, next:any) => {
+  await cachingUser(ctx);
+
+  if(ctx.response.status === 401) return;
+
+  await addDinosaur;
+});
+pteroRouter.put("/dinosaurs/:id", async(ctx:any, next:any) => {
+  await cachingUser(ctx);
+
+  if(ctx.response.status === 401) return;
+
+  await caching(ctx, updateDinosaur);
+});
+pteroRouter.delete("/dinosaurs/:id", async(ctx:any, next:any) => {
+  await cachingUser(ctx);
+
+  if(ctx.response.status === 401) return;
+  
+  await deleteDinosaur;
+});
 
 export default pteroRouter;

@@ -6,6 +6,8 @@ import {
 } from "https://deno.land/x/oak/mod.ts";
 import { redisCheck, redisSet } from "./utils/redis.ts";
 import pteroRouter from "./routers/routers.ts";
+// import { delay } from "https://deno.land/std/async/mod.ts";
+import { logData } from './utils/dataLogging.ts'
 
 const env = Deno.env.toObject();
 const PORT = env.PORT || 9000;
@@ -19,6 +21,8 @@ app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.headers.get("X-Response-Time");
   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
+  // console.log(ctx)
+  await logData(ctx)
 });
 
 // Timing
@@ -68,9 +72,9 @@ app.use(async (ctx, next) => {
 
 
 
-//
+// const delayedPromise = delay(2000);
+// const result = await delayedPromise;
 app.use(pteroRouter.prefix("/api").routes());
-
 //Serve
 // app.use(async (context) => {
 //   await send(context, context.request.url.pathname, {

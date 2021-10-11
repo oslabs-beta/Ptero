@@ -1,9 +1,11 @@
 import { v4 } from "https://deno.land/std/uuid/mod.ts";
 import { Dinosaur } from "../types/types.ts";
 import { Dinosaurs } from "../models/dinosaurs.ts";
+import { delay } from "https://deno.land/std/async/mod.ts";
 
 const getDinosaurs = async ({ response }: { response: any }) => {
   console.log("getDinosaurs triggered");
+ 
   if(response.status === 200) {
     response.body = {
       success: true,
@@ -15,11 +17,11 @@ const getDinosaurs = async ({ response }: { response: any }) => {
       success: false,
       msg: "Wrong API key",
     };
-  }
+  } 
 }
   
 
-const getDinosaur = (
+const getDinosaur = async (
   { params, response }: { params: { id: string }; response: any },
 ) => {
   const selectedDino: Dinosaur | undefined = Dinosaurs.find((dino) =>
