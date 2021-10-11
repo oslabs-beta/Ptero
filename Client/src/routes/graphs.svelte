@@ -30,18 +30,20 @@
 	section {
 		display: flex;
 		align-items: stretch;
-		justify-content: center;
+		justify-content: stretch;
 		flex-grow: 1;
+		width: 100%;
 	}
 	#graphs {
+		flex-grow: 1;
 		padding: 2em;
 		gap: 2em;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr 1fr 1fr;
+		grid-auto-columns: max-content;
 	}
 	.graph {
-		height: 26.5vh;
-		width: 47vw;
 		background-color: var(--bs-dark);
 	}
 </style>
