@@ -6,7 +6,7 @@ import {
 import { checkApiKey, caching, cachingUser } from '../utils/middlewares.ts'
 import { delay } from "https://deno.land/std/async/mod.ts";
 
-const expireTime = 120;    // 86400 seconds = 24 hrs
+const expireTime = 300;    // 86400 seconds = 24 hrs
 
 const redisCheck = async (ctx: any, func: any) => {
   const url = ctx.request.url.pathname;

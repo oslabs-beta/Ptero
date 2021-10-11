@@ -10,13 +10,14 @@ export const logData = async (ctx: any) => {
   const route = ctx.request.url.pathname;
   const status = ctx.response.status;
   const rt = ctx.response.headers.get("X-Response-Time")
-  console.log("ipAddress:", ipAddress)
-  console.log("method:", method)
-  console.log("APIKey:", APIKey)
-  console.log("Date:", new Date());
-  console.log("route:", route);
-  console.log("response Status:", status)
-  console.log("responseTime:", rt);
+  const fromCache = ctx.request.fromCache;
+  // console.log("ipAddress:", ipAddress)
+  // console.log("method:", method)
+  // console.log("APIKey:", APIKey)
+  // console.log("Date:", new Date());
+  // console.log("route:", route);
+  // console.log("response Status:", status)
+  // console.log("responseTime:", rt);
 
   // console.log(ctx.request.headers);
   
@@ -27,6 +28,7 @@ export const logData = async (ctx: any) => {
     route,
     status,
     rt,
+    fromCache,
   };
 
   // ctx.request.data = data;

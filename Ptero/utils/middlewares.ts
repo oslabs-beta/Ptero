@@ -37,10 +37,12 @@ import { delay } from "https://deno.land/std/async/mod.ts";
 export const caching = async (ctx: any, func: any) => {
   const method: string = ctx.request.method;
   const reqURL: string = ctx.request.url.pathname;
+  let fromCache;
   console.log("request Method", method);
   console.log("request URL", reqURL);
   if (await redisCheck(ctx, func) === true) {2
     console.log("Main await redisCheck === true");
+    ctx.request.fromCache = true;
   }
   else {
     const delayedPromise = delay(100);
@@ -48,7 +50,7 @@ export const caching = async (ctx: any, func: any) => {
     console.log("Main await redisCheck !== true");
     // await next();
     // app.use(pteroRouter.prefix("/api").routes());
-    
+    ctx.request.fromCache = false;
     await redisSet(ctx);
   }
 };

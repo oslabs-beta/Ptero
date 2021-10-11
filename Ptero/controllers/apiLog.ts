@@ -54,9 +54,10 @@ export const getOneLog = async (ctx: any, next: any) => {
 export const addLog = async (ctx: any) => {
   try {
     // console.log("ctx.request:", ctx.request)
-    console.log("ctx only:", ctx)
-    const { method, route, status, APIKey, ipAddress, rt } = await ctx;
+    // console.log("ctx only:", ctx)
+    let { method, route, status, APIKey, ipAddress, rt, fromCache } = await ctx;
     // const { method, route, status, APIKey, ipAddress } = await body;
+    if (fromCache === undefined) fromCache = false;
     
     await APILog.insertOne({
       method: method,
@@ -66,6 +67,7 @@ export const addLog = async (ctx: any) => {
       responseTime: rt,
       APIKey: APIKey, // user id?
       ipAddress: ipAddress,
+      fromCache: fromCache,
     });
 
     // ctx.response.body = {
