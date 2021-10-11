@@ -1,0 +1,27 @@
+:root {
+	--header-height: 5em;
+	--bg-color: white;
+	--base: 10px;
+	--shadow-color: grey;
+	--shadow-text: lightgrey;
+	--background-color: lightblue;
+	--main-color: steelblue;
+	--accent-color: orangered;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+}
+#svelte {
+	height: 100%;
+	width: 100%;
+}
+body {
+	margin: 0;
+	color: white;
+	background-color: #101010;
+	height: 100%;
+	width: 100%;
+	font-family: 'Montserrat', sans-serif;
+}
