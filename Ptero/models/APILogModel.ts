@@ -21,6 +21,7 @@ interface LogSchema {
   responseTime: string,
   APIKey: string, // user id?
   ipAddress: string,
+  fromCache: boolean,
   // cached: boolian
 }
 

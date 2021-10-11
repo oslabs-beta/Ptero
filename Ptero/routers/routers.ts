@@ -19,7 +19,6 @@ pteroRouter.get("/dinosaurs", async(ctx:any, next:any) => {
   if(ctx.response.status === 401) return;
 
   await caching(ctx, getDinosaurs);
- 
 });
 
 pteroRouter.get("/dinosaurs/:id", async(ctx:any, next:any) => {
