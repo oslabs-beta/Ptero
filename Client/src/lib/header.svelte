@@ -23,46 +23,4 @@
 </header>
 
 <style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
-	nav {
-		background: var(--bg-color);
-		/* box-shadow: 2px 5px 10px var(--shadow-color); */
-		/* padding: 1em; */
-		justify-content: flex-end;
-		/* border-radius: 30px 0 30px 30px; */
-	}
-	ul {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: var(--base);
-	}
-	li {
-		list-style-type: none;
-	}
-	a {
-		text-shadow: var(--shadow-text);
-		color: steelblue;
-		margin: 2em;
-	}
-	a:visited,
-	a:hover {
-		text-decoration: none;
-		font-family: 'Montserrat', sans-serif;
-		/* color: inherit; */
-	}
-	a:focus {
-		color: white;
-	}
-	.active {
-		border-bottom: 2px solid var(--accent-color);
-		height: 5em;
-		justify-content: center;
-		background-color: var(--background-color);
-		color: white;
-		border-radius: 10px 0 0 10px;
-	}
 </style>

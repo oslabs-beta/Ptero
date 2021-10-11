@@ -10,14 +10,18 @@
 
 <style>
 	main {
-		color: whitesmoke;
-		background-color: var(--background-color);
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: stretch;
 		height: 100%;
 		width: 100%;
-		/* background-color: orangered; */
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		height: 100vh;
+		background-image: url('../background.jpg');
+	}
+	slot {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		flex-grow: 1;
 	}
 </style>
