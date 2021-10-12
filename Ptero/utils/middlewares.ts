@@ -55,9 +55,9 @@ export const caching = async (ctx: any, func: any) => {
   }
 };
 
-export const cachingUser = async (ctx: any) => {
+export const cachingUser = async (ctx: any, func: any) => {
   // const method: string = ctx.request.method;
-  const reqKey: string = ctx.request.headers.get('api_key');
+  const reqKey: string = await ctx.request.headers.get('api_key');
   // console.log("request Method", method);
   console.log("request Key", reqKey);
   if (await redisCheckUser(ctx) === true) {
@@ -69,7 +69,7 @@ export const cachingUser = async (ctx: any) => {
     console.log("Main await redisCheck !== true");
     // await next();
     // app.use(pteroRouter.prefix("/api").routes());
-    await checkApiKey(ctx);
+    await func(ctx);
     if (ctx.response.status === 202) await redisSetUser(ctx);
     else {
       console.log("incorect API key")
@@ -78,30 +78,3 @@ export const cachingUser = async (ctx: any) => {
 };
 
 
-export const checkApiKey = async (ctx:any) => {
-  console.log("in checkAPIKey")
-  // check api key in the cache
-  // what happens when user is in the cache ? statuscode?
-  // if not check in the db/file
-  const selectedUser: UserInterface | undefined = await Users.find((user) =>
-    user.api_key === ctx.request.headers.get('api_key')
-  );
-
-  console.log("api key is", ctx.request.headers.get('api_key'));
-  
-  if (selectedUser) { 
-    ctx.response.status = 202;
-    ctx.response.body = {
-      success: true,
-      data: selectedUser
-    };
-  }
-  else {
-    ctx.response.status = 401;
-    ctx.response.body = {
-      success: false,
-      msg: "incorrect api key"
-    }
-  }
-  
-} 
