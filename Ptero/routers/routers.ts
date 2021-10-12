@@ -12,6 +12,7 @@ import { delay } from "https://deno.land/std/async/mod.ts";
 import { logData } from '../utils/dataLogging.ts'
 
 const pteroRouter = new Router();
+
 pteroRouter.use("/", async(ctx:any, next:any) => {
   await cachingUser(ctx, checkApiKey)
   if(ctx.response.status === 401) return;

@@ -75,9 +75,10 @@ app.use(async (ctx, next) => {
 
 // const delayedPromise = delay(2000);
 // const result = await delayedPromise;
+app.use(apiLogRouter.prefix("/log").routes());
+
 app.use(pteroRouter.prefix("/api").routes());
 
-app.use(apiLogRouter.prefix("/apiLog").routes());
 
 //Serve
 // app.use(async (context) => {

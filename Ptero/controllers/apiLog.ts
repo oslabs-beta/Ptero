@@ -9,14 +9,15 @@ export const getLogs = async (ctx: any, next: any) => {
   //const users = db.collection<UserSchema>("users");
   try {
     const data: any = await APILog.find({}, { noCursorTimeout: false }).toArray();
+    console.log("data:", data)
     ctx.response.body = {
       status: true,
       data: data
     };
     ctx.response.status = 200;
-    await next()
   }
   catch (err) {
+    console.log("catch getLog");
     ctx.response.body = { status: false, data: null };
     ctx.response.status = 500;
     console.log(err);
