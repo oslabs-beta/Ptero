@@ -1,4 +1,5 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
+import { checkApiKey } from "../controllers/controllers.ts"
 
 import {
   getCharacters,
@@ -11,19 +12,22 @@ import {
   getSpecies,
 } from "../controllers/controllers.ts";
 
+import { caching, cachingUser } from '../../Ptero/utils/middlewares.ts'
+
 const testRouter = new Router();
 
-testRouter.get("/", ctx => {
-  ctx.response.body = "hello ptero";
+testRouter.use("/", async (ctx: any, next: any) => {
+  await cachingUser(ctx, checkApiKey);
+  if(ctx.response.status === 401) return;
+  await next();
 })
 
 testRouter.get("/characters", async (ctx: any, next: any) => {
-  await getCharacters(ctx, next);
+  await caching(ctx, getCharacters);
 });
 
 testRouter.get("/characters/:id", async (ctx:any, next: any) => {
-  console.log("getOnecharacter before")
-  await getOneCharacter(ctx, next);
+  await caching(ctx, getOneCharacter);
 });
 
 testRouter.post("/characters", async (ctx:any, next: any) => {
@@ -39,15 +43,15 @@ testRouter.delete("/characters/:id", async (ctx:any, next: any) => {
 });
 
 testRouter.get("/films", async (ctx: any, next: any) => {
-  await getFilms(ctx, next)
+  await caching(ctx, getFilms);
 });
 
 testRouter.get("/planets", async (ctx: any, next: any) => {
-  await getPlanets(ctx, next)
+  await caching(ctx, getPlanets);
 });
 
 testRouter.get("/species", async (ctx: any, next: any) => {
-  await getSpecies(ctx, next)
+  await caching(ctx, getSpecies);
 });
 
 export default testRouter;

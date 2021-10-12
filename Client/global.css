@@ -19,9 +19,8 @@ html {
 }
 body {
 	margin: 0;
-	background-color: var(--background-color);
-	display: flex;
-	justify-content: flex-start;
+	color: white;
+	background-color: #101010;
 	height: 100%;
 	width: 100%;
 	font-family: 'Montserrat', sans-serif;

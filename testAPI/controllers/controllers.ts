@@ -2,6 +2,7 @@ import { RouterContext } from "https://deno.land/x/oak/mod.ts";
 import { db, people, films, species, planets }   from "../models/db.ts";
 import { ErrorHandler } from "../utils/middlewares.ts";
 import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
+import { Users } from "../models/userModel.ts"
 // const database = db.getDatabase;
 // const collection = database.collection("collection"); // to update with collection
 
@@ -17,7 +18,7 @@ export const getCharacters = async (ctx: any, next: any) => {
       data: data
     };
     ctx.response.status = 200;
-    await next()
+    // await next()
   }
   catch (err) {
     ctx.response.body = { status: false, data: null };
@@ -30,8 +31,8 @@ export const getCharacters = async (ctx: any, next: any) => {
 // });
 export const getOneCharacter = async (ctx: any, next: any) => {
   try {
-    console.log("im in getonecharacter")
-    const id = ctx.request.params.id;
+    const id = ctx.params.id;
+    console.log(id)
     const data: any = await people.findOne({ _id: new Bson.ObjectId(id)}, { noCursorTimeout: false });
 
     ctx.response.body = {
@@ -39,7 +40,7 @@ export const getOneCharacter = async (ctx: any, next: any) => {
       data: data,
     }
     ctx.response.status = 200;
-    await next();    
+    // await next();    
   }
   catch(err) {
     ctx.response.body = { status: false, data: null };
@@ -175,7 +176,7 @@ export const getPlanets = async (ctx: any, next: any) => {
       data: data
     };
     ctx.response.status = 200;
-    await next()
+    // await next()
   }
   catch (err) {
     ctx.response.body = { status: false, data: null };
@@ -192,7 +193,7 @@ export const getSpecies = async (ctx: any, next: any) => {
       data: data
     };
     ctx.response.status = 200;
-    await next()
+    // await next()
   }
   catch (err) {
     ctx.response.body = { status: false, data: null };
@@ -200,6 +201,34 @@ export const getSpecies = async (ctx: any, next: any) => {
     console.log(err);
   }
 }
+
+export const checkApiKey = async (ctx:any) => {
+  console.log("in checkAPIKey")
+  // check api key in the cache
+  // what happens when user is in the cache ? statuscode?
+  // if not check in the db/file
+  let api_key = ctx.request.headers.get('api_key')
+  const selectedUser: any = await Users.findOne( { api_key }, { noCursorTimeout: false });
+
+  // console.log("api key is", ctx.request.headers.get('api_key'));
+  console.log("Selected User: ", selectedUser);
+
+  if (selectedUser) { 
+    ctx.response.status = 202;
+    ctx.response.body = {
+      success: true,
+      data: selectedUser
+    };
+  }
+  else {
+    ctx.response.status = 401;
+    ctx.response.body = {
+      success: false,
+      msg: "incorrect api key"
+    }
+  }
+  
+} 
 
 // //Example of controller
 // export const createContact: HandlerFunc = async (c: Context) => {

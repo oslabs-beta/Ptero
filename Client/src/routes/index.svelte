@@ -1,22 +1,65 @@
 <script context="module">
-	export const prerender = true;
+	import Graph1 from '$lib/graphs/graph1.svelte';
+	import Card from '$lib/graphs/Card.svelte';
+
+	let open = false;
 </script>
 
 <section>
-	<h1>Welcome to Ptero!</h1>
-	<h2>Watch your Deno take off!</h2>
+	<div class="overviewWindow">
+		<div class="widget" />
+		<div class="widgetNumbers">
+			<div class="numbers">
+				<Card cardValue={30} color={'orange'} />
+			</div>
+			<div class="numbers">
+				<Card cardValue={230} color={'red'} />
+			</div>
+			<div class="numbers">
+				<Card cardValue={3} color={'green'} />
+			</div>
+		</div>
+		<div class="widget">
+			<h1>Requests per endpoint</h1>
+			<Graph1 />
+		</div>
+		<div class="widget" />
+	</div>
 </section>
 
 <style>
-	h1 {
-		color: var(--main-color);
-		font-size: 2em;
+	section {
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
+		flex-grow: 1;
+		width: 100%;
 	}
-	h2 {
-		color: var(--accent-color);
-		font-size: 1.5em;
+	.overviewWindow {
+		flex-grow: 1;
+		padding: 2em;
+		gap: 2em;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr 2fr;
+		grid-auto-columns: max-content;
 	}
-	/* section {
-		background-color: black;
-	} */
+	.widget {
+		background-color: var(--bs-dark);
+	}
+	.widget h1 {
+		text-align: center;
+	}
+	.widgetNumbers {
+		background-color: var(--bs-dark);
+		display: flex;
+		justify-content: stretch;
+		align-content: stretch;
+		padding: 1em;
+		gap: 1em;
+	}
+	.numbers {
+		flex-grow: 1;
+		/* background-color: var(--bs-light); */
+	}
 </style>
