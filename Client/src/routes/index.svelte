@@ -1,17 +1,10 @@
 <script context="module">
 	import Graph1 from '$lib/graphs/graph1.svelte';
-	import Card from '$lib/graphs/Card.svelte';
+	import Card from '$lib/graphs/card.svelte';
+	// import Log from '$lib/db.ts';
 	// import { each } from 'svelte/internal';
 
-	// 	export async function load({ fetch }) {
-	//     const res = await fetch('/logs');
-
-	//   if (res.ok) return { props: { logs: await res.json() } };
-	//   return {
-	//     status: res.status,
-	//     error: new Error()
-	//    };
-	//   }
+	// Log.find().then((data) => console.log(data));
 </script>
 
 <section>
