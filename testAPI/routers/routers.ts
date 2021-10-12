@@ -22,6 +22,7 @@ testRouter.get("/characters", async (ctx: any, next: any) => {
 });
 
 testRouter.get("/characters/:id", async (ctx:any, next: any) => {
+  console.log("getOnecharacter before")
   await getOneCharacter(ctx, next);
 });
 

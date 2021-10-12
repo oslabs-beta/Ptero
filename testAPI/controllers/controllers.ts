@@ -30,7 +30,8 @@ export const getCharacters = async (ctx: any, next: any) => {
 // });
 export const getOneCharacter = async (ctx: any, next: any) => {
   try {
-    const id = ctx.params.id;
+    console.log("im in getonecharacter")
+    const id = ctx.request.params.id;
     const data: any = await people.findOne({ _id: new Bson.ObjectId(id)}, { noCursorTimeout: false });
 
     ctx.response.body = {
