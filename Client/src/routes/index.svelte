@@ -1,13 +1,26 @@
 <script context="module">
 	import Graph1 from '$lib/graphs/graph1.svelte';
 	import Card from '$lib/graphs/Card.svelte';
+	// import { each } from 'svelte/internal';
 
-	let open = false;
+	// 	export async function load({ fetch }) {
+	//     const res = await fetch('/logs');
+
+	//   if (res.ok) return { props: { logs: await res.json() } };
+	//   return {
+	//     status: res.status,
+	//     error: new Error()
+	//    };
+	//   }
 </script>
 
 <section>
 	<div class="overviewWindow">
-		<div class="widget" />
+		<div class="widget">
+			<!-- {#each logs as log}
+				 <h3> {log} </h3>
+			{/each} -->
+		</div>
 		<div class="widgetNumbers">
 			<div class="numbers">
 				<Card cardValue={30} color={'orange'} />
