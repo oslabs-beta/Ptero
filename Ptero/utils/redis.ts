@@ -3,7 +3,7 @@ import {
   getDinosaurs,
 } from "../controllers/dinosaurs.ts";
 
-import { checkApiKey, caching, cachingUser } from '../utils/middlewares.ts'
+import { caching, cachingUser } from '../utils/middlewares.ts'
 import { delay } from "https://deno.land/std/async/mod.ts";
 
 const expireTime = 300;    // 86400 seconds = 24 hrs
@@ -29,7 +29,7 @@ const redisCheck = async (ctx: any, func: any) => {
 const redisCheckUser = async (ctx: any) => {
   // const url = ctx.request.url.pathname;
   const key = ctx.request.headers.get('api_key');
-  console.log(ctx.request.headers);
+  console.log(ctx.request.headers, key);
   let cached = await redisClient.get(key);
   console.log("cache is:", await cached, "that key");
   if (cached) {
