@@ -9,7 +9,8 @@ import pteroRouter from "./routers/routers.ts";
 import apiLogRouter from "./routers/apiLogRouter.ts";
 import userRouter from "./routers/userRouter.ts";
 // import { delay } from "https://deno.land/std/async/mod.ts";
-import { logData } from './utils/dataLogging.ts'
+import { logData } from "./utils/dataLogging.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 const env = Deno.env.toObject();
 const PORT = env.PORT || 9000;
@@ -18,13 +19,19 @@ const HOST = env.HOST || "localhost";
 const app = new Application();
 const router = new Router();
 
+app.use(
+  oakCors({
+    origin: "http://localhost:3000",
+  }),
+);
+
 // Logger
 app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.headers.get("X-Response-Time");
   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
   // console.log(ctx)
-  await logData(ctx)
+  await logData(ctx);
 });
 
 // Timing
@@ -72,15 +79,12 @@ app.use(async (ctx, next) => {
 // save api key with username and usage: { count: 0, date: date(now) } in db;
 // request endpoint starts at localhost:xxxx/
 
-
-
 // const delayedPromise = delay(2000);
 // const result = await delayedPromise;
 app.use(apiLogRouter.prefix("/log").routes());
 app.use(userRouter.prefix("/users").routes());
 
 app.use(pteroRouter.prefix("/api").routes());
-
 
 //Serve
 // app.use(async (context) => {
@@ -94,7 +98,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 // global error handling
-router.get("/(.*)", async (ctx: any) => {      
+router.get("/(.*)", async (ctx: any) => {
   ctx.response.status = 404;
   ctx.response.body = "404 | Page not Found";
 });
