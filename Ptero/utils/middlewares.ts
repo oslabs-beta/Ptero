@@ -4,14 +4,18 @@ import {
   Status,
 } from "https://deno.land/x/oak/mod.ts";
 
-import { redisCheck, redisSet, redisCheckUser, redisSetUser } from "../utils/redis.ts";
+import {
+  redisCheck,
+  redisCheckUser,
+  redisSet,
+  redisSetUser,
+} from "../utils/redis.ts";
 import pteroRouter from "../routers/routers.ts";
 import { v4 } from "https://deno.land/std/uuid/mod.ts";
-import { Users, UserInterface } from "../models/users.ts";
+import { Users } from "../models/users.ts";
 import { delay } from "https://deno.land/std/async/mod.ts";
 
 // import { delay } from "https://deno.land/std/async/mod.ts";
-
 
 // const app = new Application();
 
@@ -19,7 +23,7 @@ import { delay } from "https://deno.land/std/async/mod.ts";
 //   try {
 //     await next();
 //   } catch (err) {
-//     if (isHttpError(err)) { 
+//     if (isHttpError(err)) {
 //       switch (err.status) {
 //         case Status.NotFound:
 //           // handle NotFound
@@ -40,68 +44,58 @@ export const caching = async (ctx: any, func: any) => {
   let fromCache;
   console.log("request Method", method);
   console.log("request URL", reqURL);
-  if (await redisCheck(ctx, func) === true) {2
+  if (await redisCheck(ctx, func) === true) {
+    2;
     console.log("Main await redisCheck === true");
     ctx.request.fromCache = true;
-  }
-  else {
+  } else {
     const delayedPromise = delay(100);
     const result = await delayedPromise;
     console.log("Main await redisCheck !== true");
     // await next();
     // app.use(pteroRouter.prefix("/api").routes());
     ctx.request.fromCache = false;
-    await redisSet(ctx);
+    await redisSet(ctx, 300);
   }
 };
 
-export const cachingUser = async (ctx: any) => {
+export const cachingUser = async (ctx: any, func: any) => {
   // const method: string = ctx.request.method;
-  const reqKey: string = ctx.request.headers.get('api_key');
+  // let reqKey: string;
+  // try {
+  //   reqKey = await ctx.request.headers.get("api_key");
+  // } catch (err) {
+  //   reqKey = "";
+  //   console.log("need API key");
+  // }
   // console.log("request Method", method);
-  console.log("request Key", reqKey);
+  // console.log("request Key", reqKey);
   if (await redisCheckUser(ctx) === true) {
     console.log("Main await redisCheck === true");
-  }
-  else {
+  } else {
     const delayedPromise = delay(100);
     const result = await delayedPromise;
     console.log("Main await redisCheck !== true");
     // await next();
     // app.use(pteroRouter.prefix("/api").routes());
-    await checkApiKey(ctx);
-    if (ctx.response.status === 202) await redisSetUser(ctx);
+    await func(ctx);
+    if (ctx.response.status === 202) await redisSetUser(ctx, 300);
     else {
-      console.log("incorect API key")
+      console.log("incorect API key");
     }
   }
 };
 
-
-export const checkApiKey = async (ctx:any) => {
-  console.log("in checkAPIKey")
-  // check api key in the cache
-  // what happens when user is in the cache ? statuscode?
-  // if not check in the db/file
-  const selectedUser: UserInterface | undefined = await Users.find((user) =>
-    user.api_key === ctx.request.headers.get('api_key')
-  );
-
-  console.log("api key is", ctx.request.headers.get('api_key'));
-  
-  if (selectedUser) { 
-    ctx.response.status = 202;
-    ctx.response.body = {
-      success: true,
-      data: selectedUser
-    };
+export const checkIfApiKey = async (ctx: any, next: any) => {
+  console.log(ctx.request.headers)
+  if(ctx.request.headers.has('api_key')) {
+    console.log("in if of checkif apiKey")
+    ctx.response.status = 200;
   }
   else {
+    console.log("in else of checkif apiKey")
+    ctx.response.body = { msg: "API key is required."}
     ctx.response.status = 401;
-    ctx.response.body = {
-      success: false,
-      msg: "incorrect api key"
-    }
   }
-  
-} 
+  // await next();
+}

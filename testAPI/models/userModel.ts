@@ -11,7 +11,7 @@ await client.connect(dbHostUrl);
 interface UserSchema {
   username: string;
   api_key: string;
-  date_created: Date; 
+  date_created: Date;
   usage: { count: number };
 }
 

@@ -20,6 +20,7 @@ const getDinosaurs = async ({ response }: { response: any }) => {
   } 
 }
   
+// 5d964d2a4712b40af6b6b64e
 
 const getDinosaur = async (
   { params, response }: { params: { id: string }; response: any },
