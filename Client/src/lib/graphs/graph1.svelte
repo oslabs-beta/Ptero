@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	var data = [86, 3, 281, 303, 365, 45, 100, 230, 325, 400, 30, 168, 250, 600];
+	let data = [86, 3, 281, 303, 365, 45, 100, 230, 325, 400, 30, 168, 250, 600];
 
 	let el;
 	onMount(() => {
