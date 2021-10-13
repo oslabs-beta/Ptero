@@ -25,6 +25,12 @@ app.use(
   }),
 );
 
+// app.use(async (ctx, next) => {
+//   if (ctx.response.headers.get("api_key") === "123") {
+//     console.log("------------broken-------------");
+//   }
+// });
+
 // Logger
 app.use(async (ctx, next) => {
   await next();
@@ -41,6 +47,8 @@ app.use(async (ctx, next) => {
   const ms = Date.now() - start;
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
+
+// check if there is an API key
 
 // caching
 // app.use(async (ctx, next) => {
