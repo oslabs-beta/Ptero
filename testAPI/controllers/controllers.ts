@@ -109,8 +109,10 @@ export const addCharacter = async (ctx: any, next: any) => {
 
 export const updateCharacter = async (ctx: any, next: any) => {
   try {
+    // Q = 615f1c30ed92f5397196fa55
     const id = ctx.params.id;
     const body = await ctx.request.body();
+    // console.log(body)
     const { name } = await body.value;
 
     await people.updateOne(
@@ -127,7 +129,7 @@ export const updateCharacter = async (ctx: any, next: any) => {
   } catch (err) {
     ctx.response.body = {
       status: false,
-      message: "failed to create new character",
+      message: "failed to update character",
     };
     ctx.response.status = 500;
     console.log(err);
