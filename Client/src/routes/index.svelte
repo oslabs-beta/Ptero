@@ -1,35 +1,63 @@
 <script context="module">
 	import Graph1 from '$lib/graphs/graph1.svelte';
 	import Card from '$lib/graphs/card.svelte';
-	// import Log from '$lib/db.ts';
-	// import { each } from 'svelte/internal';
+	import Logs from '$lib/store.ts';
+	import Totals from '$lib/store.ts';
+	import LogLine from '$lib/graphs/LogLine.svelte';
+	import { Table } from 'sveltestrap';
 
-	// Log.find().then((data) => console.log(data));
+	let logEls = [];
+
+	// Logs.subscribe((data) => {
+	// 	console.log(data);
+	// 	logEls = data;
+	// });
 </script>
 
 <section>
 	<div class="overviewWindow">
 		<div class="widget">
-			<!-- {#each logs as log}
-				 <h3> {log} </h3>
-			{/each} -->
+			<h1>Requests over time</h1>
 		</div>
 		<div class="widgetNumbers">
 			<div class="numbers">
-				<Card cardValue={30} color={'orange'} />
+				<Card cardValue={$Totals[200]} color={'green'} />
 			</div>
 			<div class="numbers">
-				<Card cardValue={230} color={'red'} />
+				<Card cardValue={$Totals[404]} color={'orange'} />
 			</div>
 			<div class="numbers">
-				<Card cardValue={3} color={'green'} />
+				<Card cardValue={$Totals[500]} color={'red'} />
 			</div>
 		</div>
 		<div class="widget">
-			<h1>Requests per endpoint</h1>
+			<h1>Requests per endpoint and method</h1>
 			<Graph1 />
 		</div>
-		<div class="widget" />
+		<div class="widgetLogs">
+			<Table dark>
+				<thead>
+					<tr>
+						<th>Method</th>
+						<th>Route</th>
+						<th>Response Time</th>
+						<th>Status</th>
+						<th>Cached</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each $Logs as log}
+						<tr>
+							<th scope="row">{log.method}</th>
+							<td style="width:10%">{log.route}</td>
+							<td>{log.respTime}</td>
+							<td>{log.status}</td>
+							<td>{log.cached}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</Table>
+		</div>
 	</div>
 </section>
 
@@ -40,21 +68,24 @@
 		justify-content: stretch;
 		flex-grow: 1;
 		width: 100%;
+		height: 95%;
 	}
+
 	.overviewWindow {
 		flex-grow: 1;
 		padding: 2em;
 		gap: 2em;
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		grid-template-rows: 1fr 2fr;
-		grid-auto-columns: max-content;
+		grid-template-rows: 1fr 3fr;
 	}
 	.widget {
 		background-color: var(--bs-dark);
 	}
 	.widget h1 {
 		text-align: center;
+		font-size: 1.5em;
+		font-weight: bolder;
 	}
 	.widgetNumbers {
 		background-color: var(--bs-dark);
@@ -63,6 +94,21 @@
 		align-content: stretch;
 		padding: 1em;
 		gap: 1em;
+	}
+	.widgetLogs {
+		background-color: var(--bs-dark);
+		overflow-y: scroll;
+		font-size: 0.8em;
+	}
+	.widgetLogs thead th {
+		color: var(--bs-light);
+		border-radius: 5px;
+		background-color: var(--bs-dark);
+	}
+	.widgetLogs thead th:hover {
+		color: var(--bs-dark);
+		border-radius: 5px;
+		background-color: var(--bs-light);
 	}
 	.numbers {
 		flex-grow: 1;
