@@ -1,17 +1,12 @@
 <script context="module">
 	import Graph1 from '$lib/graphs/graph1.svelte';
 	import Card from '$lib/graphs/card.svelte';
-	import Logs from '$lib/store.ts';
-	import Totals from '$lib/store.ts';
+	import { Logs, Totals } from '$lib/store.ts';
 	import LogLine from '$lib/graphs/LogLine.svelte';
 	import { Table } from 'sveltestrap';
+	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
 
 	let logEls = [];
-
-	// Logs.subscribe((data) => {
-	// 	console.log(data);
-	// 	logEls = data;
-	// });
 </script>
 
 <section>
@@ -21,18 +16,18 @@
 		</div>
 		<div class="widgetNumbers">
 			<div class="numbers">
-				<Card cardValue={$Totals[200]} color={'green'} />
+				<Card cardValue={$Totals['200']} color={'lightgreen'} />
 			</div>
 			<div class="numbers">
-				<Card cardValue={$Totals[404]} color={'orange'} />
+				<Card cardValue={$Totals['404']} color={'orange'} />
 			</div>
 			<div class="numbers">
-				<Card cardValue={$Totals[500]} color={'red'} />
+				<Card cardValue={$Totals['500']} color={'red'} />
 			</div>
 		</div>
 		<div class="widget">
 			<h1>Requests per endpoint and method</h1>
-			<Graph1 />
+			<StackedBarHorizontal />
 		</div>
 		<div class="widgetLogs">
 			<Table dark>
@@ -80,6 +75,7 @@
 		grid-template-rows: 1fr 3fr;
 	}
 	.widget {
+		padding: 1em;
 		background-color: var(--bs-dark);
 	}
 	.widget h1 {
@@ -96,8 +92,10 @@
 		gap: 1em;
 	}
 	.widgetLogs {
+		padding: 1em;
 		background-color: var(--bs-dark);
 		overflow-y: scroll;
+		scrollbar-color: var(--bs-dark);
 		font-size: 0.8em;
 	}
 	.widgetLogs thead th {

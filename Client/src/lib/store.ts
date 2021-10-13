@@ -4,7 +4,7 @@ const Logs = writable([]);
 const Totals = writable({});
 
 let tempLogs = [];
-// let tempTotals = {};
+let tempTotals = {};
 
 const fetchLogs = async () => {
   tempLogs = [];
@@ -27,15 +27,16 @@ const fetchLogs = async () => {
   tempLogs = await loadedLogs;
   await Logs.set(tempLogs);
 
-  // tempTotals = {};
+  tempTotals = { 200: "200", 404: "404", 500: "500" };
   // await Logs.forEach((el) => {
   //   if (el.status === 200) tempTotals["200"];
   //   else if (el.status === 404) tempTotals["404"]++;
   //   else if (el.status === 500) tempTotals["500"]++;
   // });
   // console.log(tempTotals);
-  // await Totals.set(tempTotals);
+  await Totals.set(tempTotals);
+  // console.log(tempTotals);
 };
 
 fetchLogs();
-export default Logs;
+export { Logs, Totals };
