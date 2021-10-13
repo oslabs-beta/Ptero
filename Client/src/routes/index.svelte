@@ -1,10 +1,9 @@
 <script context="module">
-	import Graph1 from '$lib/graphs/graph1.svelte';
 	import Card from '$lib/graphs/card.svelte';
 	import { Logs, Totals } from '$lib/store.ts';
-	import LogLine from '$lib/graphs/LogLine.svelte';
 	import { Table } from 'sveltestrap';
 	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
+	import Histogram from '$lib/graphs/Histogram.svelte';
 
 	let logEls = [];
 </script>
@@ -12,7 +11,7 @@
 <section>
 	<div class="overviewWindow">
 		<div class="widget">
-			<h1>Requests over time</h1>
+			<Histogram />
 		</div>
 		<div class="widgetNumbers">
 			<div class="numbers">

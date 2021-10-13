@@ -6,7 +6,7 @@
 		{ route: '/test/api', GET: 1600, POST: 1440, PUT: 960, DELETE: 400, id: 2 },
 		{ route: '/api', GET: 820, POST: 1000, PUT: 640, DELETE: 400, id: 3 },
 		{ route: '/Dinosaurs', GET: 820, POST: 560, PUT: 720, DELETE: 400, id: 4 },
-		{ route: '/test', GET: 3840, POST: 1920, PUT: 960, DELETE: 400, id: 5 },
+		{ route: '/banana', GET: 3840, POST: 1920, PUT: 960, DELETE: 400, id: 5 },
 		{ route: '/test/api', GET: 1600, POST: 1440, PUT: 960, DELETE: 400, id: 6 },
 		{ route: '/api', GET: 820, POST: 1000, PUT: 640, DELETE: 400, id: 7 },
 		{ route: '/Dinosaurs', GET: 820, POST: 560, PUT: 720, DELETE: 400, id: 8 }
@@ -45,7 +45,7 @@
 <style>
 	.chart {
 		height: 100%;
-		padding: 1em 0em 3em 3em;
+		padding: 0em 0em 3em 10em;
 		margin: 0 0 36px 0;
 	}
 
@@ -56,7 +56,7 @@
 
 	.grid-line.horizontal {
 		width: calc(100% + 3em);
-		left: -3em;
+		left: -10em;
 	}
 
 	.grid-line.vertical {
