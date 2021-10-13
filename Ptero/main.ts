@@ -7,6 +7,7 @@ import {
 import { redisCheck, redisSet } from "./utils/redis.ts";
 import pteroRouter from "./routers/routers.ts";
 import apiLogRouter from "./routers/apiLogRouter.ts";
+import userRouter from "./routers/userRouter.ts";
 // import { delay } from "https://deno.land/std/async/mod.ts";
 import { logData } from './utils/dataLogging.ts'
 
@@ -76,6 +77,7 @@ app.use(async (ctx, next) => {
 // const delayedPromise = delay(2000);
 // const result = await delayedPromise;
 app.use(apiLogRouter.prefix("/log").routes());
+app.use(userRouter.prefix("/users").routes());
 
 app.use(pteroRouter.prefix("/api").routes());
 

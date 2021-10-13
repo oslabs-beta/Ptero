@@ -7,7 +7,7 @@ import {
 import { redisCheck, redisSet, redisCheckUser, redisSetUser } from "../utils/redis.ts";
 import pteroRouter from "../routers/routers.ts";
 import { v4 } from "https://deno.land/std/uuid/mod.ts";
-import { Users, UserInterface } from "../models/users.ts";
+import { Users } from "../models/users.ts";
 import { delay } from "https://deno.land/std/async/mod.ts";
 
 // import { delay } from "https://deno.land/std/async/mod.ts";
@@ -51,7 +51,7 @@ export const caching = async (ctx: any, func: any) => {
     // await next();
     // app.use(pteroRouter.prefix("/api").routes());
     ctx.request.fromCache = false;
-    await redisSet(ctx);
+    await redisSet(ctx, 300);
   }
 };
 
@@ -70,7 +70,7 @@ export const cachingUser = async (ctx: any, func: any) => {
     // await next();
     // app.use(pteroRouter.prefix("/api").routes());
     await func(ctx);
-    if (ctx.response.status === 202) await redisSetUser(ctx);
+    if (ctx.response.status === 202) await redisSetUser(ctx, 300);
     else {
       console.log("incorect API key")
     }

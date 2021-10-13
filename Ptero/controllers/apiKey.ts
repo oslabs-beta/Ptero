@@ -1,13 +1,13 @@
 import { v4 } from "https://deno.land/std/uuid/mod.ts";
-import { Users, UserInterface } from "../models/users.ts";
+import { Users } from "../models/users.ts";
 
 export const checkApiKey = async (ctx:any) => {
   console.log("in checkAPIKey")
   // check api key in the cache
   // what happens when user is in the cache ? statuscode?
   // if not check in the db/file
-  const selectedUser: UserInterface | undefined = await Users.find((user) =>
-    user.api_key === ctx.request.headers.get('api_key')
+  const selectedUser: any | undefined = await Users.find((user: any) => {
+    user.api_key === ctx.request.headers.get('api_key')}, { noCursorTimeout: false }
   );
 
   console.log("api key is", ctx.request.headers.get('api_key'));

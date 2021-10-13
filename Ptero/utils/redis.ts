@@ -46,23 +46,30 @@ const redisCheckUser = async (ctx: any) => {
 };
 
 
-const redisSet = async (ctx: any) => {
+const redisSet = async (ctx: any, time: number) => {
   const url = ctx.request.url.pathname;
   const resp = await ctx.response.body;
   const respJSON = await JSON.stringify(resp);
   console.log(resp);
   // define a time to live to avoid flooding the cache;
-  await redisClient.set(url, respJSON, { ex: expireTime });
+  await redisClient.set(url, respJSON, { ex: time });
 };
 
-const redisSetUser = async (ctx: any) => {
+const redisSetUser = async (ctx: any, time: number) => {
   // save user oked ness
-  const key = ctx.request.headers.get('api_key');
+  let key;
+  try {
+    key = ctx.request.headers.get('api_key');
+  }
+  catch {
+    key = ctx.request.headers.api_key;
+  }
+  // const key = ctx.request.headers.get('api_key');
   const resp = await ctx.response.body;
   const respJSON = await JSON.stringify(resp);
   console.log(resp);
   // define a time to live to avoid flooding the cache;
-  await redisClient.set(key, respJSON, { ex: expireTime });
+  await redisClient.set(key, respJSON, { ex: time });
   ctx.response.status = 200;
 
 }
