@@ -1,44 +1,21 @@
-export interface UserInterface {
+import { MongoClient, Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
+
+const dbHostUrl = "mongodb+srv://pterots:aZxmaine!302@cluster0.tm2cs.mongodb.net/TestDB?authMechanism=SCRAM-SHA-1"
+// mongodb+srv://pterots:aZxmaine!302@cluster0.lnd8g.mongodb.net/starwars?authMechanism=SCRAM-SHA-1
+// mongodb+srv://pterots:<password>@cluster0.tm2cs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+const dbName: string = "TestDB";
+
+const client = new MongoClient();
+await client.connect(dbHostUrl);
+
+interface UserSchema {
   username: string;
   api_key: string;
-  date_created: Date;
+  date_created: Date; 
   usage: { count: number };
 }
 
-export const Users: Array<UserInterface> = [
-  {
-    username: "David",
-    api_key: "123",
-    date_created: new Date('2021-10-09T16:19:18Z'),
-    usage: {
-      count: 0
-    }
-  },
-  {
+const db = client.database(dbName);
+const Users = db.collection<UserSchema>("users");
 
-    username: "Rachel",
-    api_key: "456",
-    date_created: new Date('2021-10-09T16:19:18Z'),
-    usage: {
-      count: 0
-    }
-  },
-  {
-
-    username: "Quentin",
-    api_key: "789",
-    date_created: new Date('2021-10-09T16:19:18Z'),
-    usage: {
-      count: 0
-    }
-  },
-  {
-
-    username: "Brian",
-    api_key: "111",
-    date_created: new Date('2021-10-09T16:19:18Z'),
-    usage: {
-      count: 0
-    }
-  },
-];
+export { db, Users }; 

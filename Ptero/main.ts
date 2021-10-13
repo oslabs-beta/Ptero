@@ -7,6 +7,7 @@ import {
 import { redisCheck, redisSet } from "./utils/redis.ts";
 import pteroRouter from "./routers/routers.ts";
 import apiLogRouter from "./routers/apiLogRouter.ts";
+import userRouter from "./routers/userRouter.ts";
 // import { delay } from "https://deno.land/std/async/mod.ts";
 import { logData } from "./utils/dataLogging.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
@@ -24,6 +25,12 @@ app.use(
   }),
 );
 
+// app.use(async (ctx, next) => {
+//   if (ctx.response.headers.get("api_key") === "123") {
+//     console.log("------------broken-------------");
+//   }
+// });
+
 // Logger
 app.use(async (ctx, next) => {
   await next();
@@ -40,6 +47,8 @@ app.use(async (ctx, next) => {
   const ms = Date.now() - start;
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
+
+// check if there is an API key
 
 // caching
 // app.use(async (ctx, next) => {
@@ -81,6 +90,7 @@ app.use(async (ctx, next) => {
 // const delayedPromise = delay(2000);
 // const result = await delayedPromise;
 app.use(apiLogRouter.prefix("/log").routes());
+app.use(userRouter.prefix("/users").routes());
 
 app.use(pteroRouter.prefix("/api").routes());
 
