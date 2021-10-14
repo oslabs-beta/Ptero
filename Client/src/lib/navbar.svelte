@@ -28,7 +28,9 @@
 			<NavItem>
 				<NavLink href="/graphs">Graphs</NavLink>
 			</NavItem>
-			<NavItem />
+			<NavItem>
+				<NavLink href="/logs">Logs</NavLink>
+			</NavItem>
 			<NavItem>
 				<NavLink href="/settings">Settings</NavLink>
 			</NavItem>
