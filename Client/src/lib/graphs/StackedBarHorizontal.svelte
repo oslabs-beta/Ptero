@@ -12,7 +12,7 @@
 
 	IndexBars.subscribe((value) => {
 		totals = value.slice(0, 10);
-		console.log(totals);
+		// console.log(totals);
 		stacks = Pancake.stacks(totals, method, 'id');
 		max = stacks.reduce((max, stack) => Math.max(max, ...stack.values.map((v) => v.end)), 0);
 	});

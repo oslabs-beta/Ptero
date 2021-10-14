@@ -9,12 +9,12 @@ United States	69.77	70.27	70.12	69.92	70.17	70.21	70.21	70.56	69.95	70.51	70.81	
 
 const rows = tsv.split('\n').map((str) => str.split('\t'));
 const headers = rows.shift();
-const years = headers.slice(1).map((n) => +n);
+const day = headers.slice(1).map((n) => +n);
 
-const countries = rows.map((row) => {
+const route = rows.map((row) => {
 	return {
 		name: row[0],
-		data: years
+		data: day
 			.map((year, i) => ({
 				x: year,
 				y: +row[i + 1]
@@ -23,17 +23,17 @@ const countries = rows.map((row) => {
 	};
 });
 
-console.log(countries[0]['data']);
+console.log(route[0]['data']);
 
-export { years, countries };
+export { day, route };
 
 // import { Logs, } from '../store.ts';
-// // "countries" to "endpoints". "years" to "days". "y" to "vists per day"
+// // "route" to "endpoints". "day" to "days". "y" to "vists per day"
 // const days = ["oct1", "oct2"]
 // const endpoints = Logs.map((row) => {
 // 	row
 // })
 
-// // console.log("countries[0]: ", countries[0]);
+// // console.log("route[0]: ", route[0]);
 
 // export { endpoints, days };

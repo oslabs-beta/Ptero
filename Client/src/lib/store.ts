@@ -4,6 +4,7 @@ const IndexBars = writable([]);
 const Logs = writable([]);
 const TotalsStatus = writable([]);
 const CachedvsNotCached = writable({});
+const DailyData = writable({});
 
 let tempLogs = [];
 let tempIndexBars = [];
@@ -32,6 +33,7 @@ const fetchLogs = async () => {
   totalsPerStatus();
   indexStackedBars();
   avgRspTimeCvsNC();
+  // routePerDay();
 };
 
 const totalsPerStatus = async () => {
@@ -42,13 +44,13 @@ const totalsPerStatus = async () => {
     if (!tempStatusTotals[el.status]) tempStatusTotals[el.status] = 0;
     tempStatusTotals[el.status] += 1;
   });
-  console.log(tempStatusTotals);
+  // console.log(tempStatusTotals);
   for (const status in tempStatusTotals) {
     const temp = {};
     temp[status] = tempStatusTotals[status];
     tempStatus.push(temp);
   }
-  console.log(tempStatus);
+  // console.log(tempStatus);
   TotalsStatus.set(tempStatus);
 };
 
@@ -112,31 +114,40 @@ const indexStackedBars = async () => {
 //     }
 // }
 
-// [{name: route, data: [{x: date, y: #}]}, {name: route, data: [{x: date, y: #}]}, ... ]
+const routePerDay = async () => {
+  const tempDailyData = {};
+  await tempLogs.forEach((log) => {
+    const route = log.route;
+    const date = log.time;
+    const year = date.substring(0, 4);
+    const month = date.substring(5, 7);
+    const day = date.substring(8, 10);
+    const strDate = `${year}/${month}/${day}`;
 
-// const routePerDay = async () => {
-//   const data = {
-//     date: {
-//       total: 0,
-//       details: {
-//         route: '',
-//         total: 0,
-//         status: {
-//           200: 0,
-//           404: 0,
-//         },
-//         cached: {
-//           cached: 0,
-//           notCached: 0,
-//         },
-//       },
-//     },
-//   };
+    if (!tempDailyData[strDate]) {
+      tempDailyData[strDate] = {};
+      tempDailyData[strDate]["totals"] = 0;
+    }
+    tempDailyData[strDate]["totals"] += 1;
+    if (!tempDailyData[strDate][route]) {
+      tempDailyData[strDate][route] = {
+        "total": 0,
+        "status": {},
+        "cached": { "cached": 0, "notCached": 0 },
+      };
+    }
+    tempDailyData[strDate][route]["total"] += 1;
+    if (log.cached === true) {
+      tempDailyData[strDate][route]["cached"]["cached"] += 1;
+    } else tempDailyData[strDate][route]["cached"]["notCached"] += 1;
 
-//   tempLogs.forEach((logs) => {
-//
-//   });
-// };
+    if (!tempDailyData[strDate][route]["status"][log.status]) {
+      tempDailyData[strDate][route]["status"][log.status] = 0;
+    }
+    tempDailyData[strDate][route]["status"][log.status] += 1;
+  });
+  console.log(tempDailyData);
+};
 
 //Histogram computation
 // const histogramCalc = async () => {
@@ -175,9 +186,9 @@ const avgRspTimeCvsNC = async () => {
   });
   avg.cached = Math.floor(cached.time / cached.num);
   avg.notCached = Math.floor(notCached.time / notCached.num);
-  console.log(avg);
+  // console.log(avg);
   CachedvsNotCached.set(avg);
 };
 
 fetchLogs();
-export { CachedvsNotCached, IndexBars, Logs, TotalsStatus };
+export { CachedvsNotCached, DailyData, IndexBars, Logs, TotalsStatus };
