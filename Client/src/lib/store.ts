@@ -21,7 +21,7 @@ const fetchLogs = async () => {
       route: data.route,
       status: data.status,
       respTime: data.responseTime,
-      key: data.APIkey,
+      key: data.APIKey,
       ip: data.ipAddress,
       cached: data.fromCache,
     };

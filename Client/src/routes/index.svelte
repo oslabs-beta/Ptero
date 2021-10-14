@@ -25,7 +25,7 @@
 			{#if $IndexBars}
 				<StackedBarHorizontal />
 			{/if}
-		</div>
+		</div> 
 		<div class="widgetLogs">
 			<Table dark>
 				<thead>
