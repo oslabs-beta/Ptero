@@ -43,6 +43,100 @@
 	</div>
 {/if}
 
+<!-- EXEMPLE PROVIDED OBJECT -->
+<!-- [
+    {
+        "route": "/log",
+        "GET": 629,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 1,
+        "tot": 629
+    },
+    {
+        "route": "/api/dinosaurs",
+        "GET": 107,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 2,
+        "tot": 107
+    },
+    {
+        "route": "/test/characters/",
+        "GET": 36,
+        "POST": 4,
+        "PUT": 1,
+        "DELETE": 0,
+        "id": 3,
+        "tot": 41
+    },
+    {
+        "route": "/api/dinosaurs/1",
+        "GET": 25,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 4,
+        "tot": 25
+    },
+    {
+        "route": "/api/dinosaurs/",
+        "GET": 22,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 5,
+        "tot": 22
+    },
+    {
+        "route": "/api/dinosaurs/2",
+        "GET": 21,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 6,
+        "tot": 21
+    },
+    {
+        "route": "/test/characters/5d964d2a4712b40af6b6b654",
+        "GET": 19,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 7,
+        "tot": 19
+    },
+    {
+        "route": "/test/characters",
+        "GET": 14,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 8,
+        "tot": 14
+    },
+    {
+        "route": "/test/characters/5d964d2a4712b40af6b6b66e",
+        "GET": 2,
+        "POST": 0,
+        "PUT": 12,
+        "DELETE": 0,
+        "id": 9,
+        "tot": 14
+    },
+    {
+        "route": "/test/character/",
+        "GET": 13,
+        "POST": 0,
+        "PUT": 0,
+        "DELETE": 0,
+        "id": 10,
+        "tot": 13
+    }
+] -->
+
 <style>
 	.chart {
 		height: 100%;
