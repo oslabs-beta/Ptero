@@ -1,6 +1,6 @@
 <script context="module">
 	import Card from '$lib/graphs/card.svelte';
-	import { Logs, Totals } from '$lib/store.ts';
+	import { Logs, Totals, IndexBars } from '$lib/store.ts';
 	import { Table } from 'sveltestrap';
 	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
 	import Histogram from '$lib/graphs/Histogram.svelte';
@@ -26,7 +26,9 @@
 		</div>
 		<div class="widget">
 			<h1>Requests per endpoint and method</h1>
-			<StackedBarHorizontal />
+			{#if $IndexBars}
+				<StackedBarHorizontal />
+			{/if}
 		</div>
 		<div class="widgetLogs">
 			<Table dark>
