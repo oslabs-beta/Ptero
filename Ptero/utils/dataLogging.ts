@@ -22,6 +22,10 @@ export const logData = async (ctx: any) => {
   // console.log("responseTime:", rt);
   // console.log(ctx.request.headers);
 
+  if(route === '/log') {
+    return;
+  }
+
   const data = {
     ipAddress,
     method,
