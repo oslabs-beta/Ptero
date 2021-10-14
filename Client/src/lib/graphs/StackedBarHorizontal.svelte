@@ -22,9 +22,7 @@
 <div class="chart">
 	<Pancake.Chart x1={0} x2={max} y1={0.5} y2={10.5}>
 		<Pancake.Grid horizontal count={totals.length} let:value let:first>
-			<!-- {#if totals[value - 1]} -->
-			<div class="grid-line horizontal"><span>{totals[value - 1]['route']}</span></div>
-			<!-- {/if} -->
+			<div class="grid-line horizontal"><span>{totals[10 - value]['route']}</span></div>
 		</Pancake.Grid>
 
 		<Pancake.Grid vertical count={8} let:value>
@@ -34,7 +32,7 @@
 
 		{#each stacks as stack, i}
 			{#each stack.values as d}
-				<Pancake.Box x1={d.start} x2={d.end} y1={d.i - 0.5} y2={d.i + 0.5}>
+				<Pancake.Box x1={d.start} x2={d.end} y1={11 - d.i - 0.5} y2={11 - d.i + 0.5}>
 					<div class="box" style="background-color: {colors[i]}" />
 				</Pancake.Box>
 			{/each}
@@ -152,6 +150,8 @@
 	.grid-line.horizontal {
 		width: calc(100% + 3em);
 		left: -10em;
+        /* display: flex; */
+        /* border-top: 1px dashed #ccc; */
 	}
 
 	.grid-line.vertical {
@@ -167,6 +167,9 @@
 		font-size: 14px;
 		color: #999;
 		line-height: 1;
+        width:11em;
+        overflow-wrap:break-word;
+        /* text-align:right; */
 	}
 
 	.x-label {

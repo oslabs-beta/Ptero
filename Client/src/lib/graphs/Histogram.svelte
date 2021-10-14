@@ -1,6 +1,8 @@
 <script>
 	import * as Pancake from '@sveltejs/pancake';
 	import { countries, years } from './points.js';
+	// import { endpoints, requests } from './whatever.js';
+	// "countries" to "endpoints". "years" to "days". "y" to "vists per day"
 	let x1 = +Infinity;
 	let x2 = -Infinity;
 	let y1 = +Infinity;

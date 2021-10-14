@@ -26,3 +26,14 @@ const countries = rows.map((row) => {
 console.log(countries[0]['data']);
 
 export { years, countries };
+
+// import { Logs, } from '../store.ts';
+// // "countries" to "endpoints". "years" to "days". "y" to "vists per day"
+// const days = ["oct1", "oct2"]
+// const endpoints = Logs.map((row) => {
+// 	row
+// })
+
+// // console.log("countries[0]: ", countries[0]);
+
+// export { endpoints, days };
