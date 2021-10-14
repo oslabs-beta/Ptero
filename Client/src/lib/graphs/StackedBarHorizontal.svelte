@@ -18,32 +18,33 @@
 	});
 </script>
 
-{#if $IndexBars.length > 1}
-	<div class="chart">
-		<Pancake.Chart x1={0} x2={max} y1={0.5} y2={5.5}>
-			<Pancake.Grid horizontal count={totals.length} let:value let:first>
-				{#if totals[value - 1]}
-					<div class="grid-line horizontal"><span>{totals[value - 1]['route']}</span></div>
-				{/if}
-			</Pancake.Grid>
+<!-- {#if $IndexBars.length > 1} -->
+<div class="chart">
+	<Pancake.Chart x1={0} x2={max} y1={0.5} y2={10.5}>
+		<Pancake.Grid horizontal count={totals.length} let:value let:first>
+			<!-- {#if totals[value - 1]} -->
+			<div class="grid-line horizontal"><span>{totals[value - 1]['route']}</span></div>
+			<!-- {/if} -->
+		</Pancake.Grid>
 
-			<Pancake.Grid vertical count={8} let:value>
-				<div class="grid-line vertical" />
-				<span class="x-label">{value}</span>
-			</Pancake.Grid>
+		<Pancake.Grid vertical count={8} let:value>
+			<div class="grid-line vertical" />
+			<span class="x-label">{value}</span>
+		</Pancake.Grid>
 
-			{#each stacks as stack, i}
-				{#each stack.values as d}
-					<Pancake.Box x1={d.start} x2={d.end} y1={d.i - 0.5} y2={d.i + 0.5}>
-						<div class="box" style="background-color: {colors[i]}" />
-					</Pancake.Box>
-				{/each}
+		{#each stacks as stack, i}
+			{#each stack.values as d}
+				<Pancake.Box x1={d.start} x2={d.end} y1={d.i - 0.5} y2={d.i + 0.5}>
+					<div class="box" style="background-color: {colors[i]}" />
+				</Pancake.Box>
 			{/each}
-		</Pancake.Chart>
-	</div>
-{/if}
+		{/each}
+	</Pancake.Chart>
+</div>
+<!-- {/if} -->
 
 <!-- EXEMPLE PROVIDED OBJECT -->
+
 <!-- [
     {
         "route": "/log",
@@ -136,7 +137,6 @@
         "tot": 13
     }
 ] -->
-
 <style>
 	.chart {
 		height: 100%;

@@ -23,4 +23,6 @@ const countries = rows.map((row) => {
 	};
 });
 
+console.log(countries[0]['data']);
+
 export { years, countries };
