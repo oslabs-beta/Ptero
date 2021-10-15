@@ -1,6 +1,6 @@
 <script context="module">
 	import Card from '$lib/graphs/card.svelte';
-	import { Logs, Totals } from '$lib/store.ts';
+	import { Logs, TotalsStatus, IndexBars } from '$lib/store.ts';
 	import { Table } from 'sveltestrap';
 	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
 	import Histogram from '$lib/graphs/Histogram.svelte';
@@ -14,20 +14,18 @@
 			<Histogram />
 		</div>
 		<div class="widgetNumbers">
-			<div class="numbers">
-				<Card cardValue={$Totals['200']} color={'lightgreen'} />
-			</div>
-			<div class="numbers">
-				<Card cardValue={$Totals['404']} color={'orange'} />
-			</div>
-			<div class="numbers">
-				<Card cardValue={$Totals['500']} color={'red'} />
-			</div>
+			{#each $TotalsStatus as status}
+				<div class="numbers">
+					<Card cardValue={status} />
+				</div>
+			{/each}
 		</div>
 		<div class="widget">
 			<h1>Requests per endpoint and method</h1>
-			<StackedBarHorizontal />
-		</div>
+			{#if $IndexBars}
+				<StackedBarHorizontal />
+			{/if}
+		</div> 
 		<div class="widgetLogs">
 			<Table dark>
 				<thead>

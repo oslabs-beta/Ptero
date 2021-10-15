@@ -1,12 +1,17 @@
 <script>
 	import * as Pancake from '@sveltejs/pancake';
-	import { countries, years } from './points.js';
+	import { DailyData } from '$lib/store.ts';
+	import { route, day } from './points.js';
+	// import { endpoints, requests } from './whatever.js';
+	// "route" to "endpoints". "day" to "days". "y" to "vists per day"
 	let x1 = +Infinity;
 	let x2 = -Infinity;
 	let y1 = +Infinity;
 	let y2 = -Infinity;
 
-	countries.forEach((country) => {
+	// [{name: route, data: [{x: date, y: #}]}, {name: route, data: [{x: date, y: #}]}, ... ]
+
+	route.forEach((country) => {
 		country.data.forEach((d) => {
 			if (d.x < x1) x1 = d.x;
 			if (d.x > x2) x2 = d.x;
@@ -16,7 +21,7 @@
 	});
 	let closest;
 
-	$: points = countries.reduce((points, country) => {
+	$: points = route.reduce((points, country) => {
 		return points.concat(
 			country.data.map((d) => ({
 				x: d.x,
@@ -38,7 +43,7 @@
 		</Pancake.Grid>
 
 		<Pancake.Svg>
-			{#each countries as country}
+			{#each route as country}
 				<Pancake.SvgLine data={country.data} let:d>
 					<path class="data" {d} />
 				</Pancake.SvgLine>
@@ -59,7 +64,7 @@
 					style="transform: translate(-{100 * ((closest.x - x1) / (x2 - x1))}%,0)"
 				>
 					<strong>{closest.country.name}</strong>
-					<span>{closest.x}: {closest.y} years</span>
+					<span>{closest.x}: {closest.y} day</span>
 				</div>
 			</Pancake.Point>
 		{/if}
