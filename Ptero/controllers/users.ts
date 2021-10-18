@@ -1,11 +1,7 @@
-import { v4 } from "https://deno.land/std/uuid/mod.ts";
 import { Users } from "../models/users.ts";
 
+// get all the users
 export const getUsers = async (ctx: any) => {
-  console.log("in get users")
-  // check api key in the cache
-  // what happens when user is in the cache ? statuscode?
-  // if not check in the db/file
   try {
     const data: any = await Users.find({}, { noCursorTimeout: false }).toArray();
     ctx.response.body = {
@@ -20,8 +16,9 @@ export const getUsers = async (ctx: any) => {
     ctx.response.status = 404;
     console.log(err);
   }
+};
 
-}
+// get one user by api key
 export const getUser = async (ctx: any) => {
 
   const apiKey = ctx.params.api_key;
@@ -39,5 +36,4 @@ export const getUser = async (ctx: any) => {
     ctx.response.body = { status: false, data: null };
     ctx.response.status = 500;
   }
-
-}
+};

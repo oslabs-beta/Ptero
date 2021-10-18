@@ -1,36 +1,11 @@
-/* Refactoring Tracker
+import { redisCheck, redisCheckUser, redisSet, redisSetUser, } from "../utils/redis.ts";
 
-Console.log - done
-Bad comments - done
-Add Good comments -
-Rename functions -
-Clean layout - done
-*/
-import {
-  Application,
-  isHttpError,
-  Status,
-} from "https://deno.land/x/oak/mod.ts";
-
-import {
-  redisCheck,
-  redisCheckUser,
-  redisSet,
-  redisSetUser,
-} from "../utils/redis.ts";
-import pteroRouter from "../routers/routers.ts";
-import { v4 } from "https://deno.land/std/uuid/mod.ts";
-import { Users } from "../models/users.ts";
-
-// caching data in to redis
+// storing data in to redis cache
 export const caching = async (ctx: any, func: any) => {
   const method: string = ctx.request.method;
   const reqURL: string = ctx.request.url.pathname;
-  let fromCache;
 
   if (await redisCheck(ctx, func) === true) {
-    2;
-    console.log("Main await redisCheck === true");
     ctx.request.fromCache = true;
   } else {
 
@@ -43,7 +18,8 @@ export const caching = async (ctx: any, func: any) => {
 export const checkUser = async (ctx: any, func: any) => {
   if (await redisCheckUser(ctx) === true) {
     console.log("Main await redisCheck === true");
-  } else {
+  } 
+  else {
     await func(ctx);
     if (ctx.response.status === 202) await redisSetUser(ctx, 300);
     else {

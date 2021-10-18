@@ -1,15 +1,12 @@
 import { RouterContext } from "https://deno.land/x/oak/mod.ts";
-import { db, APILog }   from "../models/APILogModel.ts";
+import { APILog }   from "../models/APILogModel.ts";
 // import { ErrorHandler } from "../utils/middlewares.ts";
 import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 
-
+// retrieve all the logs from the database
 export const getLogs = async (ctx: any, next: any) => { 
-  // const all_users = await users.find({ username: { $ne: null } }).toArray();
-  //const users = db.collection<UserSchema>("users");
   try {
     const data: any = await APILog.find({}, { noCursorTimeout: false }).toArray();
-    console.log("data:", data)
     ctx.response.body = {
       status: true,
       data: data
@@ -24,6 +21,7 @@ export const getLogs = async (ctx: any, next: any) => {
   }
 };
 
+// get one log by id
 export const getOneLog = async (ctx: any, next: any) => {
   try {
     const id = ctx.params.id;
@@ -41,14 +39,12 @@ export const getOneLog = async (ctx: any, next: any) => {
     ctx.response.status = 500;
     console.log(err);
   }
-}
+};
 
+// adding new log to database
 export const addLog = async (ctx: any) => {
   try {
-    // console.log("ctx.request:", ctx.request)
-    // console.log("ctx only:", ctx)
     let { method, route, status, APIKey, ipAddress, rt, fromCache } = await ctx;
-    // const { method, route, status, APIKey, ipAddress } = await body;
     if (fromCache === undefined) fromCache = false;
     
     await APILog.insertOne({
@@ -57,23 +53,12 @@ export const addLog = async (ctx: any) => {
       timeAccessed: new Date(),
       status: status,
       responseTime: rt,
-      APIKey: APIKey, // user id?
+      APIKey: APIKey,
       ipAddress: ipAddress,
       fromCache: fromCache,
     });
-
-    // ctx.response.body = {
-    //   status: true,
-    //   message: 'Added new log data'
-    // }
-    // ctx.response.status = 201;
   }
-  // catch (err) {
-  //   ctx.response.body = { status: false, message: 'failed to add new log data' };
-  //   ctx.response.status = 500;
-  //   console.log(err);
-  // }df
   catch(err) {
     console.log(err);
   };
-}
+};

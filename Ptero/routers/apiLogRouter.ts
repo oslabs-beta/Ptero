@@ -4,7 +4,6 @@ import { getLogs } from "../controllers/apiLog.ts"
 const apiLogRouter = new Router();
 
 apiLogRouter.get("/", async (ctx:any, next:any) => {
-  console.log("in api log router -----------------")
   await getLogs(ctx, next)
 });
 

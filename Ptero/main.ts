@@ -1,16 +1,10 @@
-import {
-  Application,
-  Router,
-  RouterContext,
-  send,
-} from "https://deno.land/x/oak/mod.ts";
-import { redisCheck, redisSet } from "./utils/redis.ts";
+import { Application, Router, RouterContext } from "https://deno.land/x/oak/mod.ts";
+import { logData } from "./utils/dataLogging.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
+
 import pteroRouter from "./routers/routers.ts";
 import apiLogRouter from "./routers/apiLogRouter.ts";
 import userRouter from "./routers/userRouter.ts";
-// import { delay } from "https://deno.land/std/async/mod.ts";
-import { logData } from "./utils/dataLogging.ts";
-import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 const env = Deno.env.toObject();
 const PORT = env.PORT || 9000;
@@ -25,17 +19,19 @@ app.use(
   }),
 );
 
-// move this under the 'logData' if we want to log the route to '/log'
+// move this under the 'logData' if you want to log the route to '/log'
 app.use(apiLogRouter.prefix("/log").routes());
 app.use(userRouter.prefix("/users").routes());
 
-// Timing
+// Logging of the methods, routes, and response time
 app.use(async (ctx, next) => {
   await logData(ctx, next);
 });
 
+// routes to "/api"
 app.use(pteroRouter.prefix("/api").routes());
 
+// default methods require to use different routes in Denoo
 app.use(router.routes());
 app.use(router.allowedMethods());
 
@@ -45,5 +41,6 @@ router.get("/(.*)", async (ctx: any) => {
   ctx.response.body = "404 | Page not Found";
 });
 
+// listening to localhost:PORT
 console.log(`Server running on port ${PORT}`);
 await app.listen(`${HOST}:${PORT}`);
