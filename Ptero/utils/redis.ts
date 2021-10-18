@@ -1,8 +1,4 @@
 import { redisClient } from "../models/redisClient.ts";
-import { getDinosaurs } from "../controllers/dinosaurs.ts";
-
-import { caching, cachingUser } from "../utils/middlewares.ts";
-import { delay } from "https://deno.land/std/async/mod.ts";
 
 const expireTime = 300; // 86400 seconds = 24 hrs
 
