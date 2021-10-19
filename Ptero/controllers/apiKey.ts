@@ -1,11 +1,12 @@
 import { Users } from "../models/users.ts";
+import { Context }   from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 // checking if the api key exists in the database
-export const checkApiKey = async (ctx: any) => {
+export const checkApiKey = async (ctx: Context) => {
   // check if request header contains API key
   checkIfApiKey(ctx)
   if (ctx.response.status === 401) return;
-  let apiKey: string = ctx.request.headers.get('api_key');
+  let apiKey: any | string = ctx.request.headers.get('api_key');
 
   const selectedUser: any | undefined = await Users.findOne({ api_key: apiKey }, { noCursorTimeout: false });
 
@@ -25,7 +26,7 @@ export const checkApiKey = async (ctx: any) => {
 };
 
 // checking if user provides an api key
-export const checkIfApiKey = async (ctx: any) => {
+export const checkIfApiKey = async (ctx: Context) => {
   if(ctx.request.headers.has('api_key')) {
     ctx.response.status = 200;
   }

@@ -1,4 +1,6 @@
 import { addLog, getLogs, getOneLog } from "../controllers/apiLog.ts";
+import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
+
 
 export const logData = async (ctx: any, next: any) => {
   // Time Logger

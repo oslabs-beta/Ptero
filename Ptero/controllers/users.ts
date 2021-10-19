@@ -1,7 +1,8 @@
 import { Users } from "../models/users.ts";
+import { Context }   from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 // get all the users
-export const getUsers = async (ctx: any) => {
+export const getUsers = async (ctx: Context) => {
   try {
     const data: any = await Users.find({}, { noCursorTimeout: false }).toArray();
     ctx.response.body = {

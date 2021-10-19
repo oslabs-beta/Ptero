@@ -1,4 +1,5 @@
 import { redisCheck, redisCheckUser, redisSet, redisSetUser, } from "../utils/redis.ts";
+import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts";
 
 // storing data in to redis cache
 export const caching = async (ctx: any, func: any) => {
@@ -15,7 +16,7 @@ export const caching = async (ctx: any, func: any) => {
 };
 
 // checking and caching User information from / into redis 
-export const checkUser = async (ctx: any, func: any) => {
+export const checkUser = async (ctx: Context, func: any) => {
   if (await redisCheckUser(ctx) === true) {
     console.log("Main await redisCheck === true");
   } 

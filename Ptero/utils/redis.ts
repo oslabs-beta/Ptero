@@ -1,9 +1,10 @@
 import { redisClient } from "../models/redisClient.ts";
+import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 const expireTime = 300; // 86400 seconds = 24 hrs
 
 // check if data is in the redis cache
-const redisCheck = async (ctx: any, func: any) => {
+const redisCheck = async (ctx: Context, func: any) => {
   const url = ctx.request.url.pathname;
   let cached = await redisClient.get(url);
 
@@ -40,7 +41,7 @@ const redisCheckUser = async (ctx: any) => {
 };
 
 // storing requested data in the cache with expiration time
-const redisSet = async (ctx: any, time: number) => {
+const redisSet = async (ctx: Context, time: number) => {
   const url = ctx.request.url.pathname;
   const resp = await ctx.response.body;
   const respJSON = await JSON.stringify(resp);

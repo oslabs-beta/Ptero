@@ -1,10 +1,11 @@
 import { RouterContext } from "https://deno.land/x/oak/mod.ts";
-import { APILog }   from "../models/APILogModel.ts";
+import { APILog } from "../models/APILogModel.ts";
 // import { ErrorHandler } from "../utils/middlewares.ts";
 import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
+import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 // retrieve all the logs from the database
-export const getLogs = async (ctx: any, next: any) => { 
+export const getLogs = async (ctx: Context, next: any) => {
   try {
     const data: any = await APILog.find({}, { noCursorTimeout: false }).toArray();
     ctx.response.body = {
@@ -25,16 +26,16 @@ export const getLogs = async (ctx: any, next: any) => {
 export const getOneLog = async (ctx: any, next: any) => {
   try {
     const id = ctx.params.id;
-    const data: any = await APILog.findOne({ _id: new Bson.ObjectId(id)}, { noCursorTimeout: false });
+    const data: any = await APILog.findOne({ _id: new Bson.ObjectId(id) }, { noCursorTimeout: false });
 
     ctx.response.body = {
       status: true,
       data: data,
     }
     ctx.response.status = 200;
-    await next();    
+
   }
-  catch(err) {
+  catch (err) {
     ctx.response.body = { status: false, data: null };
     ctx.response.status = 500;
     console.log(err);
@@ -46,7 +47,7 @@ export const addLog = async (ctx: any) => {
   try {
     let { method, route, status, APIKey, ipAddress, rt, fromCache } = await ctx;
     if (fromCache === undefined) fromCache = false;
-    
+
     await APILog.insertOne({
       method: method,
       route: route,
@@ -58,7 +59,7 @@ export const addLog = async (ctx: any) => {
       fromCache: fromCache,
     });
   }
-  catch(err) {
+  catch (err) {
     console.log(err);
   };
 };
