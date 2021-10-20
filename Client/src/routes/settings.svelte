@@ -6,15 +6,22 @@
 	<div id="settingsWindow">
 		<TabContent vertical>
 			<TabPane
-				style="background-color:var(--bs-dark); width:50%; height=100%;"
-				tabId="Server Settings"
+				tabId="Server"
 				tab="Server Settings"
-				active
+				style="background-color:var(--bs-dark); width:50%; height=100%;"
 			>
 				<h2>Server</h2>
-				<div id="ServerAddress">
-					<label for="ServerAddress">Back-end address:</label>
-					<input type="text" id="ServerAddress" name="ServerAddress" /><br /><br />
+				<div id="backendAddressDiv">
+					<label for="backendAddress">Back-end address:</label>
+					<input type="text" id="fname" name="fname" /><br /><br />
+				</div>
+				<div id="refreshRateDiv">
+					<label for="refreshRate">Refresh rate:</label>
+					<input type="text" id="refreshRate" name="refreshRate" /><br /><br />
+				</div>
+				<div id="APIKeyDiv">
+					<label for="APIKey">API Key:</label>
+					<input type="text" id="APIKey" name="APIKey" /><br /><br />
 				</div>
 			</TabPane>
 			<TabPane
@@ -23,24 +30,9 @@
 				style="background-color:var(--bs-dark); width:50%; height=100%;"
 			>
 				<h2>Caching Time to Leave</h2>
-				<div id="RedisTTL">
+				<div id="RedisTTLDiv">
 					<label for="RedisTTL">Time to leave:</label>
 					<input type="text" id="fname" name="fname" /> ms<br /><br />
-				</div>
-			</TabPane>
-			<TabPane
-				tabId="Server"
-				tab="Server"
-				style="background-color:var(--bs-dark); width:50%; height=100%;"
-			>
-				<h2>Server</h2>
-				<div id="backendAddress">
-					<label for="backendAddress">Back-end address:</label>
-					<input type="text" id="fname" name="fname" /><br /><br />
-				</div>
-				<div id="refreshRate">
-					<label for="refreshRate">Refresh rate:</label>
-					<input type="text" id="refreshRate" name="refreshRate" /><br /><br />
 				</div>
 			</TabPane>
 			<TabPane tabId="david" tab="David" active>
@@ -62,6 +54,7 @@
 		flex-grow: 1;
 		width: 100%;
 	}
+
 	#settingsWindow {
 		padding: 2em;
 		flex-grow: 1;
