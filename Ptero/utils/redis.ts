@@ -1,7 +1,13 @@
 import { redisClient } from "../models/redisClient.ts";
 import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
-const expireTime = 300; // 86400 seconds = 24 hrs
+/* This is constant variable that determines the expiration time of the data stored in cache (time-to-live).
+Redis takes time-to-live in seconds, hence time-to-live of 300 will be equivalent to 5 mintues.
+    ex) 86400 seconds = 24 hours, 43200 seconds = 12 hours, 3600 seconds = 1 hour, etc..
+When the route that already exists in the cache is requested, the expiration time will be renewed. 
+*/
+
+const expireTime = 300; 
 
 // check if data is in the redis cache
 const redisCheck = async (ctx: Context, func: any) => {
@@ -51,6 +57,7 @@ const redisSet = async (ctx: Context, time: number) => {
 };
 
 // storing requested user data in the cache with expiration time
+// expiration time is provided upon invoking this function and does not depend on the global constant variable provided in the top of this file.
 const redisSetUser = async (ctx: any, time: number) => {
   let key: string;
   if (ctx.request.headers.has('api_key')) key = ctx.request.headers.get('api_key');

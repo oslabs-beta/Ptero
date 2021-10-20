@@ -1,3 +1,8 @@
+/* Keeping track of the users and what information has been accessed is important in managing the RESTful API.
+These functinos will allow the API host to visualize all the request in the server by storing the data into their cloud MongoDB.
+If you want to put additional information on the logs, simply add variables that you want to monitor and retrieve the appropriate
+information from the request and response. */
+
 import { addLog, getLogs, getOneLog } from "../controllers/apiLog.ts";
 import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
