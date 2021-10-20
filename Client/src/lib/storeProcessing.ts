@@ -58,13 +58,53 @@ const reqPerEndpointAndMethodFn = async (tempLogs, ReqPerEndpointAndMethod) => {
   return;
 };
 
+const reqPerStatusAndMethodProcess = async (
+  tempLogs,
+  ReqPerStatusAndMethod,
+) => {
+  const statusObj = {};
+  const tempStatusObj = [];
+
+  tempLogs.forEach((el: any, index: number) => {
+    const test = {};
+    test["status"] = el.status;
+    if (!statusObj[el.status]) {
+      statusObj[el.status] = test;
+      statusObj[el.status]["GET"] = 0;
+      statusObj[el.status]["POST"] = 0;
+      statusObj[el.status]["PUT"] = 0;
+      statusObj[el.status]["DELETE"] = 0;
+      statusObj[el.status]["id"] = index + 1;
+      statusObj[el.status]["tot"] = 0;
+    }
+    if (el.method === "GET") statusObj[el.status]["GET"] += 1;
+    else if (el.method === "POST") statusObj[el.status]["POST"] += 1;
+    else if (el.method === "PUT") statusObj[el.status]["PUT"] += 1;
+    else if (el.method === "DELETE") statusObj[el.status]["DELETE"] += 1;
+    statusObj[el.status]["tot"] += 1;
+  });
+
+  for (const route in statusObj) {
+    tempStatusObj.push(statusObj[route]);
+  }
+
+  await tempStatusObj.sort((a, b) => {
+    return b["tot"] - a["tot"];
+  });
+  await tempStatusObj.forEach((element, index) => {
+    element.id = index + 1;
+  });
+  await ReqPerStatusAndMethod.set(tempStatusObj);
+  console.log(tempStatusObj);
+  return;
+};
+
 const avgRspTimeCvsNC = async (tempLogs, CachedvsNotCached) => {
   const avg = { cached: 0, notCached: 0 };
   const cached = { time: 0, num: 0 };
   const notCached = { time: 0, num: 0 };
 
   tempLogs.forEach((logs) => {
-    //IF cached = true
     if (logs.cached === true) {
       cached.time = cached.time + parseInt(logs.respTime, 10);
       cached.num += 1;
@@ -157,7 +197,6 @@ const RouteHistoryProcess = async (tempLogs, RouteHistory) => {
     }
   }
 
-  // console.log(allDays);
   const DailyCallsPerRoute = [];
   for (const key in tempRouteDaily) {
     const currentObj = { name: "", data: [] };
@@ -173,12 +212,14 @@ const RouteHistoryProcess = async (tempLogs, RouteHistory) => {
     DailyCallsPerRoute.push(currentObj);
   }
   RouteHistory.set(DailyCallsPerRoute);
+  console.log(DailyCallsPerRoute);
   return;
 };
 
 export {
   avgRspTimeCvsNC,
   reqPerEndpointAndMethodFn,
+  reqPerStatusAndMethodProcess,
   RouteHistoryProcess,
   routePerDay,
   totalsPerStatus,

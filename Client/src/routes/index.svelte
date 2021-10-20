@@ -32,7 +32,6 @@
 					data={ReqPerEndpointAndMethod}
 					split={['GET', 'POST', 'PUT', 'DELETE']}
 					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
-					fontSize="2em"
 				/>
 			{/if}
 		</div>

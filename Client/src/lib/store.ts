@@ -1,23 +1,37 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import {
   avgRspTimeCvsNC,
   reqPerEndpointAndMethodFn,
+  reqPerStatusAndMethodProcess,
   RouteHistoryProcess,
   routePerDay,
   totalsPerStatus,
 } from "./storeProcessing.ts";
 
+//Bulk of logs from the server
 const Logs = writable([]);
+
+//Processed logs for the graphs
 const ReqPerEndpointAndMethod = writable([]);
+const ReqPerStatusAndMethod = writable([]);
 const TotalsStatus = writable([]);
 const CachedvsNotCached = writable({});
 const DailyData = writable({});
 const DayRouteTotal = writable([]);
 const RouteHistory = writable([]);
 
+//Settings related store
+const Settings = writable({
+  serverAddress: "http://localhost:9000/log",
+  refreshRate: "10",
+  svelteAPIKey: "pwdawdjioawjdioq131",
+  redisTTL: "100",
+});
+
+//Function to retrieve the logs from the server
 const fetchLogs = async () => {
   let tempLogs = [];
-  const url = "http://localhost:9000/log";
+  const url = get(Settings).serverAddress;
   const res = await fetch(url);
   const data = await res.json();
   const loadedLogs = data.data.map((data, index: number) => {
@@ -39,6 +53,10 @@ const fetchLogs = async () => {
   totalsPerStatus(tempLogs, TotalsStatus);
   routePerDay(tempLogs, DailyData, DayRouteTotal);
   reqPerEndpointAndMethodFn(tempLogs, ReqPerEndpointAndMethod);
+  reqPerStatusAndMethodProcess(
+    tempLogs,
+    ReqPerStatusAndMethod,
+  );
   avgRspTimeCvsNC(tempLogs, CachedvsNotCached);
   RouteHistoryProcess(tempLogs, RouteHistory);
 };
@@ -51,6 +69,8 @@ export {
   DayRouteTotal,
   Logs,
   ReqPerEndpointAndMethod,
+  ReqPerStatusAndMethod,
   RouteHistory,
+  Settings,
   TotalsStatus,
 };

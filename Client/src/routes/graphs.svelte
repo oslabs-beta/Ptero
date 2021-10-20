@@ -2,18 +2,18 @@
 	import { Button, Offcanvas } from 'sveltestrap';
 	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
 	import StackedBarVerticalOriginal from '$lib/graphs/StackedBarVerticalOriginal.svelte';
-	import { ReqPerEndpointAndMethod, DailyData, DayRouteTotal } from '$lib/store';
+	import StackedBarHorizontalStatus from '$lib/graphs/StackedBarHorizontalStatus.svelte';
+	import {
+		ReqPerEndpointAndMethod,
+		DailyData,
+		CachedvsNotCached,
+		ReqPerStatusAndMethod
+	} from '$lib/store';
 
 	let open = false;
 	const toggle = () => (open = !open);
 
 	let histogramRoutes = [];
-
-	// RouteHistory.suscribe((data) => {
-	// 	data.forEach(el => {
-
-	// 	});
-	// };
 </script>
 
 <section>
@@ -27,31 +27,30 @@
 	>
 	<div id="graphs">
 		<div class="graph">
-			<h1>Requests per endpoint and method</h1>
-			{#if $ReqPerEndpointAndMethod}
-				<StackedBarHorizontal
-					data={ReqPerEndpointAndMethod}
-					split={['GET', 'POST', 'PUT', 'DELETE']}
-					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
-				/>
-			{/if}
-		</div>
-		<div class="graph">
-			<h1>Requests per endpoint and method</h1>
-			<!-- {#if $RouteHistory} -->
-			<!-- <Histogram route={$RouteHistory} /> -->
-			<!-- {/if} -->
-		</div>
-		<div class="graph">
-			<h1>Requests per endpoint and method</h1>
-			<!-- {#if $dayRouteTotal}
-				<StackedBarVertical data={$dayRouteTotal} />
-			{/if} -->
-		</div>
-		<div class="graph">
 			<h1>Requests per day over the last month</h1>
 			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['lightgreen']} />
 		</div>
+
+		<div class="graph">
+			<h1>Avg cached time against non-cached</h1>
+			<div class="twoNumbers">
+				<div id="cached" style="color:lightgreen">
+					{$CachedvsNotCached.cached}s
+				</div>
+				<div id="slash">/</div>
+				<div id="notCached" style="color:orange">
+					{$CachedvsNotCached.notCached}s
+				</div>
+			</div>
+		</div>
+		<div class="graph">
+			<h1>Methods per status</h1>
+			<StackedBarHorizontalStatus
+				data={ReqPerStatusAndMethod}
+				split={['GET', 'POST', 'PUT', 'DELETE']}
+				splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+			/>
+		</div>
 		<div class="graph">
 			<h1>Requests per endpoint and method</h1>
 			{#if $ReqPerEndpointAndMethod}
@@ -61,6 +60,16 @@
 					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
 				/>
 			{/if}
+		</div>
+		<div class="graph">
+			<h1>Requests per endpoint and method</h1>
+			<!-- {#if $ReqPerEndpointAndMethod}
+				<StackedBarHorizontal
+					data={ReqPerEndpointAndMethod}
+					split={['GET', 'POST', 'PUT', 'DELETE']}
+					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+				/>
+			{/if} -->
 		</div>
 		<div class="graph" />
 	</div>
@@ -80,6 +89,13 @@
 		flex-grow: 1;
 		width: 100%;
 	}
+	.twoNumbers {
+		display: flex;
+		justify-content: center;
+		align-items: stretch;
+		font-size: 6em;
+	}
+
 	#graphs {
 		flex-grow: 1;
 		padding: 2em;
