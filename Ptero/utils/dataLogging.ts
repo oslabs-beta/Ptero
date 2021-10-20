@@ -19,6 +19,7 @@ export const logData = async (ctx: any, next: any) => {
   const status = ctx.response.status;
   const fromCache = ctx.request.fromCache;
 
+  // if api key is proovided, it is retrieved from the request header, if not api key is equal to null.
   let APIKey;
     if (ctx.request.headers.has('api_key')) APIKey = ctx.request.headers.get('api_key');
     else APIKey = null;
