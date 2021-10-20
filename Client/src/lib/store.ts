@@ -1,17 +1,37 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import {
+  avgRspTimeCvsNC,
+  reqPerEndpointAndMethodFn,
+  reqPerStatusAndMethodProcess,
+  RouteHistoryProcess,
+  routePerDay,
+  totalsPerStatus,
+} from "./storeProcessing.ts";
 
-const IndexBars = writable([]);
+//Bulk of logs from the server
 const Logs = writable([]);
+
+//Processed logs for the graphs
+const ReqPerEndpointAndMethod = writable([]);
+const ReqPerStatusAndMethod = writable([]);
 const TotalsStatus = writable([]);
 const CachedvsNotCached = writable({});
 const DailyData = writable({});
+const DayRouteTotal = writable([]);
+const RouteHistory = writable([]);
 
-let tempLogs = [];
-let tempIndexBars = [];
+//Settings related store
+const Settings = writable({
+  serverAddress: "http://localhost:9000/log",
+  refreshRate: "10",
+  svelteAPIKey: "pwdawdjioawjdioq131",
+  redisTTL: "100",
+});
 
+//Function to retrieve the logs from the server
 const fetchLogs = async () => {
-  tempLogs = [];
-  const url = "http://localhost:9000/log";
+  let tempLogs = [];
+  const url = get(Settings).serverAddress;
   const res = await fetch(url);
   const data = await res.json();
   const loadedLogs = data.data.map((data, index: number) => {
@@ -30,165 +50,27 @@ const fetchLogs = async () => {
   tempLogs = await loadedLogs;
   await Logs.set(tempLogs.reverse());
 
-  totalsPerStatus();
-  indexStackedBars();
-  avgRspTimeCvsNC();
-  // routePerDay();
-};
-
-const totalsPerStatus = async () => {
-  const tempStatusTotals = {};
-  const tempStatus = [];
-
-  await tempLogs.forEach((el) => {
-    if (!tempStatusTotals[el.status]) tempStatusTotals[el.status] = 0;
-    tempStatusTotals[el.status] += 1;
-  });
-  // console.log(tempStatusTotals);
-  for (const status in tempStatusTotals) {
-    const temp = {};
-    temp[status] = tempStatusTotals[status];
-    tempStatus.push(temp);
-  }
-  // console.log(tempStatus);
-  TotalsStatus.set(tempStatus);
-};
-
-const indexStackedBars = async () => {
-  // { route: '/test', GET: 3840, POST: 1920, PUT: 960, DELETE: 400, id: 1 },
-  const routeObj = {};
-  tempIndexBars = [];
-  tempLogs.forEach((el, index) => {
-    const test = {};
-    test["route"] = el.route;
-    if (!routeObj[el.route]) {
-      routeObj[el.route] = test;
-      routeObj[el.route]["GET"] = 0;
-      routeObj[el.route]["POST"] = 0;
-      routeObj[el.route]["PUT"] = 0;
-      routeObj[el.route]["DELETE"] = 0;
-      routeObj[el.route]["id"] = index + 1;
-      routeObj[el.route]["tot"] = 0;
-    }
-    if (el.method === "GET") routeObj[el.route]["GET"] += 1;
-    else if (el.method === "POST") routeObj[el.route]["POST"] += 1;
-    else if (el.method === "PUT") routeObj[el.route]["PUT"] += 1;
-    else if (el.method === "DELETE") routeObj[el.route]["DELETE"] += 1;
-    routeObj[el.route]["tot"] += 1;
-  });
-
-  for (const route in routeObj) {
-    tempIndexBars.push(routeObj[route]);
-  }
-
-  await tempIndexBars.sort((a, b) => {
-    return b["tot"] - a["tot"];
-  });
-  await tempIndexBars.forEach((element, index) => {
-    element.id = index + 1;
-  });
-  await IndexBars.set(tempIndexBars);
-};
-
-// time: data.timeAccessed,
-// method: data.method,
-// route: data.route,
-// status: data.status,
-// cached: data.fromCache,
-
-//   {
-//     date: {
-//       total: #,
-//       details: {
-//         route: #,
-//         total: #,
-//         status: {
-//           200: #,
-//           404: #
-//         },
-//         cached: {
-//           cached: #,
-//           notCached: #
-//         }
-//       }
-//     }
-// }
-
-const routePerDay = async () => {
-  const tempDailyData = {};
-  await tempLogs.forEach((log) => {
-    const route = log.route;
-    const date = log.time;
-    const year = date.substring(0, 4);
-    const month = date.substring(5, 7);
-    const day = date.substring(8, 10);
-    const strDate = `${year}/${month}/${day}`;
-
-    if (!tempDailyData[strDate]) {
-      tempDailyData[strDate] = {};
-      tempDailyData[strDate]["totals"] = 0;
-    }
-    tempDailyData[strDate]["totals"] += 1;
-    if (!tempDailyData[strDate][route]) {
-      tempDailyData[strDate][route] = {
-        "total": 0,
-        "status": {},
-        "cached": { "cached": 0, "notCached": 0 },
-      };
-    }
-    tempDailyData[strDate][route]["total"] += 1;
-    if (log.cached === true) {
-      tempDailyData[strDate][route]["cached"]["cached"] += 1;
-    } else tempDailyData[strDate][route]["cached"]["notCached"] += 1;
-
-    if (!tempDailyData[strDate][route]["status"][log.status]) {
-      tempDailyData[strDate][route]["status"][log.status] = 0;
-    }
-    tempDailyData[strDate][route]["status"][log.status] += 1;
-  });
-  console.log(tempDailyData);
-};
-
-//Histogram computation
-// const histogramCalc = async () => {
-// };
-// const indexStackedBars = async () => {
-//   // { route: '/test', GET: 3840, POST: 1920, PUT: 960, DELETE: 400, id: 1 },
-//   const tempArray = [];
-//   tempLogs.forEach((el) => {
-//     const tempObj = {route: el.route};
-//     if(!tempArray.includes(tempObj)){
-//        tempArray.push(tempObj)
-//     }
-//   })
-//   console.log(tempArray);
-// }
-
-//AVERAGE RESPONSE TIME CACHED VS NON CACHED
-const avgRspTimeCvsNC = async () => {
-  //return obj like {cached: 56, notCached: 300}
-  // 56ms/300ms
-  const avg = { cached: 0, notCached: 0 };
-  //define 2 vars or an object
-  const cached = { time: 0, num: 0 };
-  const notCached = { time: 0, num: 0 };
-  //iterate through the arrayLog
-
-  tempLogs.forEach((logs) => {
-    //IF cached = true
-    if (logs.cached === true) {
-      cached.time = cached.time + parseInt(logs.respTime, 10);
-      cached.num += 1;
-    } else {
-      notCached.time += parseInt(logs.respTime, 10);
-      notCached.num += 1;
-    }
-  });
-  avg.cached = Math.floor(cached.time / cached.num);
-  avg.notCached = Math.floor(notCached.time / notCached.num);
-  // console.log(avg);
-  CachedvsNotCached.set(avg);
+  totalsPerStatus(tempLogs, TotalsStatus);
+  routePerDay(tempLogs, DailyData, DayRouteTotal);
+  reqPerEndpointAndMethodFn(tempLogs, ReqPerEndpointAndMethod);
+  reqPerStatusAndMethodProcess(
+    tempLogs,
+    ReqPerStatusAndMethod,
+  );
+  avgRspTimeCvsNC(tempLogs, CachedvsNotCached);
+  RouteHistoryProcess(tempLogs, RouteHistory);
 };
 
 fetchLogs();
-export { CachedvsNotCached, DailyData, IndexBars, Logs, TotalsStatus };
+
+export {
+  CachedvsNotCached,
+  DailyData,
+  DayRouteTotal,
+  Logs,
+  ReqPerEndpointAndMethod,
+  ReqPerStatusAndMethod,
+  RouteHistory,
+  Settings,
+  TotalsStatus,
+};

@@ -18,12 +18,12 @@ const app = new Application();
 const router = new Router();
 
 // Logger
-app.use(async (ctx, next) => {
-  await next();
-  const rt = ctx.response.headers.get("X-Response-Time");
-  console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
-  await logData(ctx)
-});
+// app.use(async (ctx, next) => {
+//   await next();
+//   const rt = ctx.response.headers.get("X-Response-Time");
+//   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
+//   await logData(ctx)
+// });
 
 // sudo service redis-server start
 // redis-cli
@@ -35,6 +35,9 @@ app.use(async (ctx, next) => {
   await next();
   const ms = Date.now() - start;
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
+  const rt = ctx.response.headers.get("X-Response-Time");
+  console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
+  await logData(ctx)
 });
 
 // app.use(async (context) => {

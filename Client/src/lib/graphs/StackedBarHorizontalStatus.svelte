@@ -17,9 +17,9 @@
 </script>
 
 <div class="chart">
-	<Pancake.Chart x1={0} x2={max} y1={0.5} y2={10.5}>
+	<Pancake.Chart x1={0} x2={max} y1={0.5} y2={6.5}>
 		<Pancake.Grid horizontal count={totals.length} let:value let:first>
-			<div class="grid-line horizontal"><span>{totals[10 - value]['route']}</span></div>
+			<div class="grid-line horizontal"><span>{totals[6 - value]['status']}</span></div>
 		</Pancake.Grid>
 
 		<Pancake.Grid vertical count={8} let:value>
@@ -28,7 +28,7 @@
 		</Pancake.Grid>
 		{#each stacks as stack, i}
 			{#each stack.values as d}
-				<Pancake.Box x1={d.start} x2={d.end} y1={11 - d.i - 0.5} y2={11 - d.i + 0.5}>
+				<Pancake.Box x1={d.start} x2={d.end} y1={7 - d.i - 0.5} y2={7 - d.i + 0.5}>
 					<div class="box" style="background-color: {splitColors[i]}" />
 				</Pancake.Box>
 			{/each}
@@ -39,7 +39,7 @@
 <style>
 	.chart {
 		height: 100%;
-		padding: 0em 0em 3em 10em;
+		padding: 0em 0em 3em 3em;
 		margin: 0 0 36px 0;
 	}
 
@@ -50,7 +50,7 @@
 
 	.grid-line.horizontal {
 		width: calc(100% + 3em);
-		left: -10em;
+		left: -3em;
 		/* display: flex; */
 		/* border-top: 1px dashed #ccc; */
 	}

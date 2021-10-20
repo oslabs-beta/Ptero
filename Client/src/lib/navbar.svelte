@@ -1,17 +1,11 @@
+<!-- Refactoring Tracker 
+  Console.log - OK
+  Bad comments - OK
+  Add Good comments
+  Rename functions - OK
+  Clean layout - OK -->
 <script lang="ts">
-	import {
-		Collapse,
-		Navbar,
-		NavbarToggler,
-		NavbarBrand,
-		Nav,
-		NavItem,
-		NavLink,
-		Dropdown,
-		DropdownToggle,
-		DropdownMenu,
-		DropdownItem
-	} from 'sveltestrap';
+	import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'sveltestrap';
 
 	let isOpen = false;
 
@@ -34,15 +28,6 @@
 			<NavItem>
 				<NavLink href="/settings">Settings</NavLink>
 			</NavItem>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Options</DropdownToggle>
-				<DropdownMenu end>
-					<DropdownItem>Option 1</DropdownItem>
-					<DropdownItem>Option 2</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem>Reset</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
 		</Nav>
 	</Collapse>
 </Navbar>

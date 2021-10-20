@@ -1,32 +1,30 @@
 <script>
 	import * as Pancake from '@sveltejs/pancake';
-	import { DailyData } from '$lib/store.ts';
-	import { route, day } from './points.js';
-	// import { endpoints, requests } from './whatever.js';
-	// "route" to "endpoints". "day" to "days". "y" to "vists per day"
+
+	export let route;
+
 	let x1 = +Infinity;
 	let x2 = -Infinity;
 	let y1 = +Infinity;
 	let y2 = -Infinity;
 
-	// [{name: route, data: [{x: date, y: #}]}, {name: route, data: [{x: date, y: #}]}, ... ]
-
-	route.forEach((country) => {
-		country.data.forEach((d) => {
+	route.forEach((path) => {
+		path.data.forEach((d) => {
 			if (d.x < x1) x1 = d.x;
 			if (d.x > x2) x2 = d.x;
 			if (d.y < y1) y1 = d.y;
 			if (d.y > y2) y2 = d.y;
 		});
 	});
+
 	let closest;
 
-	$: points = route.reduce((points, country) => {
+	let points = route.reduce((points, path) => {
 		return points.concat(
-			country.data.map((d) => ({
+			path.data.map((d) => ({
 				x: d.x,
 				y: d.y,
-				country
+				path
 			}))
 		);
 	}, []);
@@ -68,15 +66,14 @@
 				</div>
 			</Pancake.Point>
 		{/if}
-
 		<Pancake.Quadtree data={points} bind:closest />
 	</Pancake.Chart>
 </div>
 
 <style>
 	.chart {
-		height: 100%;
-		padding: 0em 0em 1em 2em;
+		height: 80%;
+		padding: 0em 0em 0em 2em;
 	}
 
 	.grid-line {
