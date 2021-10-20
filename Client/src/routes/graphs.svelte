@@ -1,7 +1,19 @@
 <script lang="ts">
 	import { Button, Offcanvas } from 'sveltestrap';
+	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
+	import StackedBarVerticalOriginal from '$lib/graphs/StackedBarVerticalOriginal.svelte';
+	import { ReqPerEndpointAndMethod, DailyData, DayRouteTotal } from '$lib/store';
+
 	let open = false;
 	const toggle = () => (open = !open);
+
+	let histogramRoutes = [];
+
+	// RouteHistory.suscribe((data) => {
+	// 	data.forEach(el => {
+
+	// 	});
+	// };
 </script>
 
 <section>
@@ -14,11 +26,42 @@
 		>O</Button
 	>
 	<div id="graphs">
-		<div class="graph" />
-		<div class="graph" />
-		<div class="graph" />
-		<div class="graph" />
-		<div class="graph" />
+		<div class="graph">
+			<h1>Requests per endpoint and method</h1>
+			{#if $ReqPerEndpointAndMethod}
+				<StackedBarHorizontal
+					data={ReqPerEndpointAndMethod}
+					split={['GET', 'POST', 'PUT', 'DELETE']}
+					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+				/>
+			{/if}
+		</div>
+		<div class="graph">
+			<h1>Requests per endpoint and method</h1>
+			<!-- {#if $RouteHistory} -->
+			<!-- <Histogram route={$RouteHistory} /> -->
+			<!-- {/if} -->
+		</div>
+		<div class="graph">
+			<h1>Requests per endpoint and method</h1>
+			<!-- {#if $dayRouteTotal}
+				<StackedBarVertical data={$dayRouteTotal} />
+			{/if} -->
+		</div>
+		<div class="graph">
+			<h1>Requests per day over the last month</h1>
+			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['lightgreen']} />
+		</div>
+		<div class="graph">
+			<h1>Requests per endpoint and method</h1>
+			{#if $ReqPerEndpointAndMethod}
+				<StackedBarHorizontal
+					data={ReqPerEndpointAndMethod}
+					split={['GET', 'POST', 'PUT', 'DELETE']}
+					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+				/>
+			{/if}
+		</div>
 		<div class="graph" />
 	</div>
 </section>
@@ -26,6 +69,9 @@
 <style>
 	h1 {
 		color: white;
+		font-size: 1.5em;
+		text-align: center;
+		margin-bottom: 0px;
 	}
 	section {
 		display: flex;
@@ -45,5 +91,6 @@
 	}
 	.graph {
 		background-color: var(--bs-dark);
+		padding: 1em;
 	}
 </style>

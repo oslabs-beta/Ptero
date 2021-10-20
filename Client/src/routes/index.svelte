@@ -1,17 +1,22 @@
+<!-- Refactoring Tracker 
+  Console.log
+  Bad comments
+  Add Good comments
+  Rename functions
+  Clean layout -->
 <script context="module">
 	import Card from '$lib/graphs/card.svelte';
-	import { Logs, TotalsStatus, IndexBars } from '$lib/store.ts';
+	import { Logs, TotalsStatus, ReqPerEndpointAndMethod, DailyData } from '$lib/store';
 	import { Table } from 'sveltestrap';
 	import StackedBarHorizontal from '$lib/graphs/StackedBarHorizontal.svelte';
-	import Histogram from '$lib/graphs/Histogram.svelte';
-
-	let logEls = [];
+	import StackedBarVerticalOriginal from '$lib/graphs/StackedBarVerticalOriginal.svelte';
 </script>
 
 <section>
 	<div class="overviewWindow">
 		<div class="widget">
-			<Histogram />
+			<h1>Requests per day over the last month</h1>
+			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['lightgreen']} />
 		</div>
 		<div class="widgetNumbers">
 			{#each $TotalsStatus as status}
@@ -22,10 +27,15 @@
 		</div>
 		<div class="widget">
 			<h1>Requests per endpoint and method</h1>
-			{#if $IndexBars}
-				<StackedBarHorizontal />
+			{#if $ReqPerEndpointAndMethod}
+				<StackedBarHorizontal
+					data={ReqPerEndpointAndMethod}
+					split={['GET', 'POST', 'PUT', 'DELETE']}
+					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+					fontSize="2em"
+				/>
 			{/if}
-		</div> 
+		</div>
 		<div class="widgetLogs">
 			<Table dark>
 				<thead>
@@ -79,6 +89,7 @@
 		text-align: center;
 		font-size: 1.5em;
 		font-weight: bolder;
+		margin-bottom: 0px;
 	}
 	.widgetNumbers {
 		background-color: var(--bs-dark);
