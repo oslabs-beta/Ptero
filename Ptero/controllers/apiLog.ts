@@ -1,6 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak/mod.ts";
 import { APILog } from "../models/APILogModel.ts";
-// import { ErrorHandler } from "../utils/middlewares.ts";
 import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
@@ -42,7 +41,7 @@ export const getOneLog = async (ctx: any, next: any) => {
   }
 };
 
-// adding new log to database
+// add new log to database
 export const addLog = async (ctx: any) => {
   try {
     let { method, route, status, APIKey, ipAddress, rt, fromCache } = await ctx;
