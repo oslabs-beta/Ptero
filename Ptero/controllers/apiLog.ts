@@ -43,15 +43,6 @@ export const getOneLog = async (ctx: any, next: any) => {
   }
 }
 
-// _id: { $oid: string },
-// method: string,
-// route: string,
-// timeAccessed: Date,
-// status: string,
-// responseTime: number,
-// APIKey: string, // user id?
-// ipAddress: string,
-
 export const addLog = async (ctx: any) => {
   try {
     // console.log("ctx.request:", ctx.request)

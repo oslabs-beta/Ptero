@@ -7,16 +7,14 @@ import {
   updateDinosaur,
 } from "../controllers/dinosaurs.ts";
 import { checkApiKey } from "../controllers/apiKey.ts";
-import { caching, cachingUser, checkIfApiKey } from "../utils/middlewares.ts";
-import { delay } from "https://deno.land/std/async/mod.ts";
-import { logData } from "../utils/dataLogging.ts";
+import { caching, checkUser, } from "../utils/middlewares.ts";
 
 const pteroRouter = new Router();
 
 pteroRouter.use("/", async (ctx: any, next: any) => {
-  await checkIfApiKey(ctx, next);
-  if(ctx.response.status === 401) return;
-  await cachingUser(ctx, checkApiKey);
+  // await checkIfApiKey(ctx, next);
+  // if(ctx.response.status === 401) return;
+  await checkUser(ctx, checkApiKey);
   if (ctx.response.status === 401) return;
   await next();
 });
