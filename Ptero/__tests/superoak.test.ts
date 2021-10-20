@@ -33,7 +33,8 @@ Deno.test('it should get hello ptero at /ptero', async () => {
 })
 
 // to get logs
-Deno.test("Log controler should produce json data", async () => {
+Deno.test("Log controller should produce json data", async () => {
   const request = await superoak(app);
   await request.get("/log").expect(200).expect("Content-Type", "application/json; charset=utf-8");
 }); 
+

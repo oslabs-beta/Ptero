@@ -1,11 +1,9 @@
 import { v4 } from "https://deno.land/std/uuid/mod.ts";
 import { Dinosaur } from "../types/types.ts";
 import { Dinosaurs } from "../models/dinosaurs.ts";
-import { delay } from "https://deno.land/std/async/mod.ts";
 
-const getDinosaurs = async ({ response }: { response: any }) => {
-  console.log("getDinosaurs triggered");
- 
+// get all the dinosaurs
+const getDinosaurs = async ({ response }: { response: any }) => { 
   if(response.status === 200) {
     response.body = {
       success: true,
@@ -19,9 +17,8 @@ const getDinosaurs = async ({ response }: { response: any }) => {
     };
   } 
 }
-  
-// 5d964d2a4712b40af6b6b64e
 
+// get one dinosaur by id  
 const getDinosaur = async (
   { params, response }: { params: { id: string }; response: any },
 ) => {
@@ -44,6 +41,7 @@ const getDinosaur = async (
   }
 };
 
+// add a dinosaur 
 const addDinosaur = async (
   { request, response }: { request: any; response: any },
 ) => {
@@ -66,9 +64,8 @@ const addDinosaur = async (
   }
 };
 
-const deleteDinosaur = (
-  { params, response }: { params: { id: string }; response: any },
-) => {
+// delete existing dinosaur
+const deleteDinosaur = ( { params, response }: { params: { id: string }; response: any } ) => {
   const filteredDinosaurs: Array<Dinosaur> = Dinosaurs.filter(
     (dinosaur: Dinosaur) => (dinosaur.id !== params.id),
   );
@@ -89,6 +86,7 @@ const deleteDinosaur = (
   }
 };
 
+// update existing dinosaur
 const updateDinosaur = async (
   { params, request, response }: {
     params: { id: string };
