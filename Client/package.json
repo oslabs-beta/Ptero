@@ -37,6 +37,8 @@
   "dependencies": {
     "@sveltejs/pancake": "^0.0.18",
     "dotenv": "^10.0.0",
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "fusioncharts": "^3.18.0",
+    "svelte-fusioncharts": "^1.0.0"
   }
 }
