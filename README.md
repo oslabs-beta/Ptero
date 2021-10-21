@@ -1,13 +1,9 @@
-# Welcome to Ptero !
+# Welcome to Ptero !!
+## Getting Started:
+### For Mac:
+### For WSL:
+#### Smaller Title
 
-## Overview
-
-
-## Contributors
-  - [Quentin Rousset](https://github.com/qrousset/)
-  - [Rachel Weller](https://github.com/wellerr3)
-  - [Brian Vazquez](https://github.com/brianvazquez9)
-  - [David Rhee](https://github.com/rheed14)
 
 
 
