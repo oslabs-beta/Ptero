@@ -1,7 +1,7 @@
 /* 
 Keeping track of the users and what information has been accessed is important in managing the RESTful API.
-These functinos will allow the API host to visualize all the request in the server by storing the data into their cloud MongoDB.
-If aditional information is desired from these logs, simply add variables that you want to monitor and retrieve the appropriate
+These functinos will allow the API host to visualize all the requests in the server by storing the data into their cloud MongoDB.
+If additional information is desired from these logs, simply add variables that you want to monitor and retrieve the appropriate
 information from the request and response. 
 */
 import { addLog } from "../controllers/apiLog.ts";

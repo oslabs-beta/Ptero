@@ -1,9 +1,23 @@
+# Welcome to Ptero !
+
+## Overview
+
+
+## Contributors
+  - [Quentin Rousset](https://github.com/qrousset/)
+  - [Rachel Weller](https://github.com/wellerr3)
+  - [Brian Vazquez](https://github.com/brianvazquez9)
+  - [David Rhee](https://github.com/rheed14)
+
+
+
+
 to get started: 
 - [ ] cd Client
 - [ ] npm install
 
-- [ ] cd ../ptero
-- [ ] npm install
+- [ ] cd ../Ptero
+- [ ] 
 
 - [ ] cd ../testapi
 - [ ] npm install
