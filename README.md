@@ -1,6 +1,8 @@
 # Welcome to Ptero !!
 ## Getting Started:
-
+### For Mac:
+### For WSL:
+#### Smaller Title
 
 
 
