@@ -8,7 +8,7 @@ Redis takes time-to-live in seconds, hence time-to-live of 300 will be equivalen
   
 When the route that already exists in the cache is requested, the expiration time will be renewed. 
 */
-const expireTime = 300; 
+const expireTime = 3000; 
 
 // check if data is in the redis cache
 const redisCheck = async (ctx: Context, func: any) => {

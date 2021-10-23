@@ -5,11 +5,14 @@
   ## Getting Started:
 
   ### Application, middleware, and context
+  The Ptero application coordinates the data logging and redis caching for one's Deno based API. The deno module would have to be loaded into the top of all of the API owners files that will be using the module as outlined below.
   ```js
   import { caching, userCaching, logData } from "https://deno.land/x/ptero/mod.ts";
   ```
 ## Data Logging
 Every request to the server will be logged in designated cloud database. Then the web or Electron application of Ptero will retrieve log data from the database and allow visualization of the data with a user-friendly interface. In order to enable data logging, add the following lines of code in your main server file. For more information see [PteroView](../Client/README.md).
+
+This code along with an import statement for it should be put into the main server file or equivalent. 
   ```js
   // Data Logging
   app.use(async (ctx, next) => {
@@ -23,13 +26,21 @@ Every request to the server will be logged in designated cloud database. Then th
 ### To Set-up Redis:
 - Make sure you have Redis installed in your machine.
 - To install Redis, check out the [Redis Quick Start Guide](https://redis.io/topics/quickstart).
-- Run a Redis instance
+- Run a Redis instance:
+  - For Mac Users: 
+    - type <code> redis-cli </code> in your terminal.
+  - For WSL/Windows Users: 
+    - type: <code> sudo service redis-server start </code> in your terminal.
+    - then type: <code> redis-cli </code> in your terminal.
+  - <code> keys * </code> gets all of the keys stored in Redis cache.
+  - <code> get (key) </code> gets the value associated with the key.
+
   ### Prerequisite
   ```js
   // Example Routing
   const testRouter = new Router();
   ```
-
+  This code along with an import statement for it should be put into the router that would route the user to the api key checking.
   ```js
   // If the server requires an api key
   testRouter.use("/", async (ctx: Context, next: any) => {
@@ -38,7 +49,7 @@ Every request to the server will be logged in designated cloud database. Then th
     await next();
   });
   ```
-
+  This code along with an import statement for it should be put into the router that would route the user to the data.
   ```js
   // Example Get Method
   testRouter.get("/endpoint", async (ctx: Context, next: any) => {

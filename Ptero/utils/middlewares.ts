@@ -17,9 +17,8 @@ export const caching = async (ctx: any, func: any) => {
   if (await redisCheck(ctx, func) === true) {
     ctx.request.fromCache = true;
   } else {
-
     ctx.request.fromCache = false;
-    await redisSet(ctx, 300);
+    await redisSet(ctx, 3000);
   }
 };
 
@@ -27,7 +26,7 @@ export const caching = async (ctx: any, func: any) => {
 export const checkUser = async (ctx: Context, func: any) => {
   if (await redisCheckUser(ctx) === false) {
     await func(ctx);
-    if (ctx.response.status === 202) await redisSetUser(ctx, 300);
+    if (ctx.response.status === 202) await redisSetUser(ctx, 3000);
     else console.log("incorect API key");
   }
 };
