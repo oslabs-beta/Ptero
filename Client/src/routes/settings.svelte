@@ -1,6 +1,6 @@
 <script>
 	import { TabContent, TabPane } from 'sveltestrap';
-	import { Settings } from '$lib/store.ts';
+	import { Settings, fetchLogs } from '$lib/store.ts';
 </script>
 
 <section>
@@ -10,6 +10,7 @@
 				tabId="Connection"
 				tab="Connection Settings"
 				style="background-color:var(--bs-dark); :30em; height=100%; padding: 2em; border-radius:50px"
+				active
 			>
 				<h2>Server</h2>
 				<div class="settingsContent">
@@ -45,6 +46,11 @@
 							placeholder={$Settings.refreshRate}
 						/>
 						{$Settings.refreshRate}<br /><br />
+						<button 
+						id="refreshButton"
+						on:click={fetchLogs}
+						>
+						Refresh</button>
 					</div>
 				</div>
 			</TabPane>
@@ -67,20 +73,6 @@
 						{$Settings.redisTTL}
 						<br /><br />
 					</div>
-				</div>
-			</TabPane>
-			<TabPane
-				tabId="david"
-				tab="David"
-				style="background-color:var(--bs-dark); width:30em; height=100%; padding: 2em; border-radius:50px"
-				active
-			>
-				<h2>David</h2>
-				<div class="settingsContent">
-					<img
-						alt="David"
-						src="https://cdn.discordapp.com/attachments/894324663444979742/895447059736440833/david.PNG"
-					/>
 				</div>
 			</TabPane>
 		</TabContent>

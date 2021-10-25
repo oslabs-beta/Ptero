@@ -15,6 +15,7 @@
 </script>
 
 <Navbar style="align-self:stretch" color="dark" dark expand="md">
+	<img src="favicon.png" alt="logo" style-height:100px/>
 	<NavbarBrand href="/">Ptero</NavbarBrand>
 	<NavbarToggler on:click={() => (isOpen = !isOpen)} />
 	<Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
@@ -31,3 +32,17 @@
 		</Nav>
 	</Collapse>
 </Navbar>
+
+
+<style>
+	section {
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
+		flex-grow: 1;
+		width: 100%;
+		height: 95%;
+		padding: 2em;
+	}
+
+</style>
