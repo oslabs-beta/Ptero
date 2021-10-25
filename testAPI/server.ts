@@ -10,6 +10,7 @@ import testRouter from "./routers/routers.ts";
 
 import { logData } from '../Ptero/utils/dataLogging.ts'
 
+
 const env = Deno.env.toObject();
 const PORT = env.PORT || 5000;
 const HOST = env.HOST || "localhost";

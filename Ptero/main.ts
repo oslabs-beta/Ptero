@@ -5,7 +5,6 @@ import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 import pteroRouter from "./routers/routers.ts";
 import apiLogRouter from "./routers/apiLogRouter.ts";
 import userRouter from "./routers/userRouter.ts";
-
 const env = Deno.env.toObject();
 const PORT = env.PORT || 9000;
 const HOST = env.HOST || "localhost";

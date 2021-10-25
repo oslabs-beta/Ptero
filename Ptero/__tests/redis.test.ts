@@ -54,4 +54,3 @@ Deno.test("Adds user to the redis cache", async () => {
     assertEquals(data, {});
   })
 });
-
