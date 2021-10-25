@@ -64,6 +64,7 @@ const fetchLogs = async () => {
 fetchLogs();
 
 export {
+  fetchLogs,
   CachedvsNotCached,
   DailyData,
   DayRouteTotal,
