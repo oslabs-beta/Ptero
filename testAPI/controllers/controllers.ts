@@ -127,7 +127,7 @@ export const updateCharacter = async (ctx: any, next: any) => {
   } catch (err) {
     ctx.response.body = {
       status: false,
-      message: "failed to create new character",
+      message: "failed to update new character",
     };
     ctx.response.status = 500;
     console.log(err);

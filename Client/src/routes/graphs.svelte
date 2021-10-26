@@ -53,6 +53,7 @@
 		</div>
 		<div class="graph">
 			<h1>Requests per endpoint and method</h1>
+			<div class="endMeth">
 			{#if $ReqPerEndpointAndMethod}
 				<StackedBarHorizontal
 					data={ReqPerEndpointAndMethod}
@@ -61,8 +62,9 @@
 				/>
 			{/if}
 		</div>
+		</div>
 		<div class="graph">
-			<h1>Requests per endpoint and method</h1>
+			<!-- <h1>Requests per endpoint and method</h1> -->
 			<!-- {#if $ReqPerEndpointAndMethod}
 				<StackedBarHorizontal
 					data={ReqPerEndpointAndMethod}
@@ -94,6 +96,8 @@
 		justify-content: center;
 		align-items: stretch;
 		font-size: 6em;
+		padding-top: 30px;	
+		
 	}
 
 	#graphs {
@@ -108,5 +112,9 @@
 	.graph {
 		background-color: var(--bs-dark);
 		padding: 1em;
+	}
+	.endMeth {
+		font-size: .5em;
+		height: 95%
 	}
 </style>

@@ -2,7 +2,7 @@ interface Logs {
   id: number;
   method: string;
   route: string;
-  time: Date;
+  time: string;
   status: number;
   respTime: string;
   key: string;
@@ -69,6 +69,20 @@ interface interfaceReqPerStatus {
   }
 }
 
+interface RouteDaily {
+  [route: string]: {
+    [strDate: string]: number 
+  } 
+}
+
+interface TempDate {
+  x: number,
+  y: number
+}
+
+interface TotalsPerStatus {
+  [status: string]: number,
+}
 
 interface ReqPerStatusAndMethod {}
 interface RouteHistory {}
@@ -84,7 +98,10 @@ export type{
   interfaceReqPerEndpointAndMethod,
   ReqPerStatusAndMethod,
   RouteHistory,
+  RouteDaily,
   Settings,
+  TempDate,
   TotalsStatus,
   interfaceReqPerStatus,
+  TotalsPerStatus,
 }

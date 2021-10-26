@@ -5,12 +5,15 @@ import type {
   DailyData, 
   interfaceReqPerEndpointAndMethod, 
   interfaceReqPerStatus,
-  DayRouteTotal, 
+  DayRouteTotal,
+  RouteDaily, 
+  TempDate,
+  TotalsPerStatus,
 } from "./store/types.ts";
 
-const totalsPerStatus = async (tempLogs: Logs, TotalsStatus) => {
-  const totalsPerStatusObj: any = {};
-  const totalsPerStatusArr: any = [];
+const totalsPerStatus = async (tempLogs: Logs[], TotalsStatus) => {
+  const totalsPerStatusObj: TotalsPerStatus = {};
+  const totalsPerStatusArr: TotalsPerStatus[] = [];
 
   await tempLogs.forEach((el: Logs) => {
     if (!totalsPerStatusObj[el.status]) totalsPerStatusObj[el.status] = 0;
@@ -18,7 +21,7 @@ const totalsPerStatus = async (tempLogs: Logs, TotalsStatus) => {
   });
   // console.log(tempStatusTotals);
   for (const status in totalsPerStatusObj) {
-    const temp = {};
+    const temp: any = {};
     temp[status] = totalsPerStatusObj[status];
     totalsPerStatusArr.push(temp);
   }
@@ -185,10 +188,10 @@ const routePerDay = async (tempLogs: Logs[], DailyData: DailyData, DayRouteTotal
 };
 
 const RouteHistoryProcess = async (tempLogs: Logs[], RouteHistory: any) => {
-  const tempRouteDaily = {};
-  await tempLogs.forEach((log: any) => {
-    const route = log.route;
-    const date = log.time;
+  const tempRouteDaily: RouteDaily  = {}
+  await tempLogs.forEach((log: Logs) => {
+    const route: string = log.route;
+    const date: string = log.time;
     const year = date.substring(0, 4);
     const month = date.substring(5, 7);
     const day = date.substring(8, 10);
@@ -199,7 +202,7 @@ const RouteHistoryProcess = async (tempLogs: Logs[], RouteHistory: any) => {
     tempRouteDaily[route][strDate]++;
   });
 
-  const allDays = [];
+  const allDays: string[] = [];
   for (const key in tempRouteDaily) {
     for (const day in tempRouteDaily[key]) {
       // console.log(day);
@@ -213,9 +216,10 @@ const RouteHistoryProcess = async (tempLogs: Logs[], RouteHistory: any) => {
     currentObj.name = key;
     for (const day in allDays) {
       if (tempRouteDaily[key][allDays[day]]) {
-        const tempDate = {};
-        tempDate.x = parseFloat(allDays[day]);
-        tempDate.y = tempRouteDaily[key][allDays[day]];
+        const tempDate: TempDate = {
+          x: parseFloat(allDays[day]),
+          y: tempRouteDaily[key][allDays[day]]
+        };
         currentObj.data.push(tempDate);
       }
     }
