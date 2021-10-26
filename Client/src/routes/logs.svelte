@@ -12,6 +12,7 @@ import LogLine from '$lib/graphs/LogLine.svelte';
 				<th>Status</th>
 				<th>Method</th>
 				<th>Route</th>
+				<th>Date</th>
 				<th>Response Time</th>
 				<th>API Key</th>
 				<th>Cached</th>
@@ -39,6 +40,7 @@ import LogLine from '$lib/graphs/LogLine.svelte';
 					
 					<!-- <th scope="row">{log.method}</th> -->
 					<td style>{log.route}</td>
+					<td>{new Date(log.time).toUTCString()}</td>
 					<td>{log.respTime}</td>
 					<td>{log.key}</td>
 					<td>{log.cached}</td>

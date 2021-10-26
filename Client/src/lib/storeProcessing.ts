@@ -1,17 +1,27 @@
 /* This file is used to store the different functions supporting the computation
 * of the difference pieces of state used in the graphs */
+import type { 
+  Logs, 
+  DailyData, 
+  interfaceReqPerEndpointAndMethod, 
+  interfaceReqPerStatus,
+  DayRouteTotal,
+  RouteDaily, 
+  TempDate,
+  TotalsPerStatus,
+} from "./store/types.ts";
 
-const totalsPerStatus = async (tempLogs, TotalsStatus) => {
-  const totalsPerStatusObj = {};
-  const totalsPerStatusArr = [];
+const totalsPerStatus = async (tempLogs: Logs[], TotalsStatus) => {
+  const totalsPerStatusObj: TotalsPerStatus = {};
+  const totalsPerStatusArr: TotalsPerStatus[] = [];
 
-  await tempLogs.forEach((el: any) => {
+  await tempLogs.forEach((el: Logs) => {
     if (!totalsPerStatusObj[el.status]) totalsPerStatusObj[el.status] = 0;
     totalsPerStatusObj[el.status] += 1;
   });
   // console.log(tempStatusTotals);
   for (const status in totalsPerStatusObj) {
-    const temp = {};
+    const temp: any = {};
     temp[status] = totalsPerStatusObj[status];
     totalsPerStatusArr.push(temp);
   }
@@ -20,21 +30,21 @@ const totalsPerStatus = async (tempLogs, TotalsStatus) => {
   return;
 };
 
-const reqPerEndpointAndMethodFn = async (tempLogs, ReqPerEndpointAndMethod) => {
-  const routeObj = {};
+const reqPerEndpointAndMethodFn = async (tempLogs: Logs[], ReqPerEndpointAndMethod: interfaceReqPerEndpointAndMethod) => {
+  const routeObj: interfaceReqPerEndpointAndMethod = {};
   const tempIndexBars = [];
 
-  tempLogs.forEach((el: any, index: number) => {
-    const test = {};
-    test["route"] = el.route;
+  tempLogs.forEach((el: Logs, index: number) => {
     if (!routeObj[el.route]) {
-      routeObj[el.route] = test;
-      routeObj[el.route]["GET"] = 0;
-      routeObj[el.route]["POST"] = 0;
-      routeObj[el.route]["PUT"] = 0;
-      routeObj[el.route]["DELETE"] = 0;
-      routeObj[el.route]["id"] = index + 1;
-      routeObj[el.route]["tot"] = 0;
+      routeObj[el.route] = {
+        route: el.route, 
+        GET: 0, 
+        POST: 0, 
+        PUT: 0, 
+        DELETE:0, 
+        id: index + 1, 
+        tot: 0
+      };
     }
     if (el.method === "GET") routeObj[el.route]["GET"] += 1;
     else if (el.method === "POST") routeObj[el.route]["POST"] += 1;
@@ -54,28 +64,30 @@ const reqPerEndpointAndMethodFn = async (tempLogs, ReqPerEndpointAndMethod) => {
     element.id = index + 1;
   });
   await ReqPerEndpointAndMethod.set(tempIndexBars);
-  console.log(tempIndexBars);
+  // console.log(tempIndexBars);
   return;
 };
 
 const reqPerStatusAndMethodProcess = async (
-  tempLogs,
-  ReqPerStatusAndMethod,
+  tempLogs: Logs[],
+  ReqPerStatusAndMethod: interfaceReqPerStatus,
 ) => {
-  const statusObj = {};
+  const statusObj: interfaceReqPerStatus = {};
   const tempStatusObj = [];
 
-  tempLogs.forEach((el: any, index: number) => {
-    const test = {};
-    test["status"] = el.status;
+  tempLogs.forEach((el, index: number) => {
+    // const test = {};
+    // test["status"] = el.status;
     if (!statusObj[el.status]) {
-      statusObj[el.status] = test;
-      statusObj[el.status]["GET"] = 0;
-      statusObj[el.status]["POST"] = 0;
-      statusObj[el.status]["PUT"] = 0;
-      statusObj[el.status]["DELETE"] = 0;
-      statusObj[el.status]["id"] = index + 1;
-      statusObj[el.status]["tot"] = 0;
+      statusObj[el.status] = {
+        status: el.status, 
+        GET: 0, 
+        POST: 0, 
+        PUT: 0, 
+        DELETE:0, 
+        id: index + 1, 
+        tot: 0
+      };
     }
     if (el.method === "GET") statusObj[el.status]["GET"] += 1;
     else if (el.method === "POST") statusObj[el.status]["POST"] += 1;
@@ -95,11 +107,11 @@ const reqPerStatusAndMethodProcess = async (
     element.id = index + 1;
   });
   await ReqPerStatusAndMethod.set(tempStatusObj);
-  console.log(tempStatusObj);
+  // console.log(tempStatusObj);
   return;
 };
 
-const avgRspTimeCvsNC = async (tempLogs, CachedvsNotCached) => {
+const avgRspTimeCvsNC = async (tempLogs: Logs[], CachedvsNotCached: any) => {
   const avg = { cached: 0, notCached: 0 };
   const cached = { time: 0, num: 0 };
   const notCached = { time: 0, num: 0 };
@@ -119,8 +131,8 @@ const avgRspTimeCvsNC = async (tempLogs, CachedvsNotCached) => {
   return;
 };
 
-const routePerDay = async (tempLogs, DailyData, DayRouteTotal) => {
-  const tempDailyData = {};
+const routePerDay = async (tempLogs: Logs[], DailyData: DailyData, DayRouteTotal: DayRouteTotal) => {
+  const tempDailyData: DailyData = {};
   await tempLogs.forEach((log: any) => {
     const route = log.route;
     const date = log.time;
@@ -131,8 +143,8 @@ const routePerDay = async (tempLogs, DailyData, DayRouteTotal) => {
     const strDate = day;
 
     if (!tempDailyData[strDate]) {
-      tempDailyData[strDate] = {};
-      tempDailyData[strDate]["totals"] = 0;
+      tempDailyData[strDate] = {totals: 0};
+      // tempDailyData[strDate]["totals"] = 0;
     }
     tempDailyData[strDate]["totals"] += 1;
     if (!tempDailyData[strDate][route]) {
@@ -155,16 +167,17 @@ const routePerDay = async (tempLogs, DailyData, DayRouteTotal) => {
 
   DailyData.set(tempDailyData);
 
-  let tempDayRouteTotal = [];
+  const tempDayRouteTotal = [];
   let id = 0;
-  for (let key in tempDailyData) {
-    for (let route in tempDailyData[key]) {
-      if (route !== "totals") {
-        const currentObj = {};
-        currentObj["date"] = parseInt(key);
-        currentObj["route"] = route;
-        currentObj["total"] = tempDailyData[key][route]["total"];
-        currentObj["id"] = id;
+  for (const key in tempDailyData) {
+    for (const prop in tempDailyData[key]) {
+      if (prop !== "totals") {
+        const currentObj: DayRouteTotal = {
+          date: parseInt(key),
+          route: prop,
+          total: tempDailyData[key][prop]["total"],
+          id: id, 
+        };
         tempDayRouteTotal.push(currentObj);
         id++;
       }
@@ -174,11 +187,11 @@ const routePerDay = async (tempLogs, DailyData, DayRouteTotal) => {
   return;
 };
 
-const RouteHistoryProcess = async (tempLogs, RouteHistory) => {
-  const tempRouteDaily = {};
-  await tempLogs.forEach((log: any) => {
-    const route = log.route;
-    const date = log.time;
+const RouteHistoryProcess = async (tempLogs: Logs[], RouteHistory: any) => {
+  const tempRouteDaily: RouteDaily  = {}
+  await tempLogs.forEach((log: Logs) => {
+    const route: string = log.route;
+    const date: string = log.time;
     const year = date.substring(0, 4);
     const month = date.substring(5, 7);
     const day = date.substring(8, 10);
@@ -189,7 +202,7 @@ const RouteHistoryProcess = async (tempLogs, RouteHistory) => {
     tempRouteDaily[route][strDate]++;
   });
 
-  const allDays = [];
+  const allDays: string[] = [];
   for (const key in tempRouteDaily) {
     for (const day in tempRouteDaily[key]) {
       // console.log(day);
@@ -203,16 +216,17 @@ const RouteHistoryProcess = async (tempLogs, RouteHistory) => {
     currentObj.name = key;
     for (const day in allDays) {
       if (tempRouteDaily[key][allDays[day]]) {
-        const tempDate = {};
-        tempDate.x = parseFloat(allDays[day]);
-        tempDate.y = tempRouteDaily[key][allDays[day]];
+        const tempDate: TempDate = {
+          x: parseFloat(allDays[day]),
+          y: tempRouteDaily[key][allDays[day]]
+        };
         currentObj.data.push(tempDate);
       }
     }
     DailyCallsPerRoute.push(currentObj);
   }
   RouteHistory.set(DailyCallsPerRoute);
-  console.log(DailyCallsPerRoute);
+  // console.log(DailyCallsPerRoute);
   return;
 };
 
