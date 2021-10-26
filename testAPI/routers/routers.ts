@@ -12,12 +12,12 @@ import {
   getSpecies,
 } from "../controllers/controllers.ts";
 
-import { caching, cachingUser } from '../../Ptero/utils/middlewares.ts'
+import { caching, checkUser } from '../../Ptero/utils/middlewares.ts'
 
 const testRouter = new Router();
 
 testRouter.use("/", async (ctx: any, next: any) => {
-  await cachingUser(ctx, checkApiKey);
+  await checkUser(ctx, checkApiKey);
   if(ctx.response.status === 401) return;
   await next();
 })

@@ -2,7 +2,7 @@
 	export let cardValue;
 	let color;
 
-	if (Object.keys(cardValue)[0] === '200') color = 'lightgreen';
+	if (Object.keys(cardValue)[0] === '200') color = 'var(--main-color)';
 	else if (Number(Object.keys(cardValue)[0]) > 200 && Number(Object.keys(cardValue)[0]) < 400)
 		color = 'orange';
 	else if (Number(Object.keys(cardValue)[0]) === 500) color = 'orange';

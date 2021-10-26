@@ -39,7 +39,6 @@ Deno.test("Adds data to the redis cache", async () => {
 Deno.test("Adds user to the redis cache", async () => {
   const ctx = { request: { headers: { api_key: "9999" } }, 
                 response: { body: "user tester" } };
-
   await redisSetUser(ctx, 2); 
   
   let data = await redisClient.get("9999");
@@ -55,4 +54,3 @@ Deno.test("Adds user to the redis cache", async () => {
     assertEquals(data, {});
   })
 });
-

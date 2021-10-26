@@ -1,17 +1,11 @@
+<!-- Refactoring Tracker 
+  Console.log - OK
+  Bad comments - OK
+  Add Good comments
+  Rename functions - OK
+  Clean layout - OK -->
 <script lang="ts">
-	import {
-		Collapse,
-		Navbar,
-		NavbarToggler,
-		NavbarBrand,
-		Nav,
-		NavItem,
-		NavLink,
-		Dropdown,
-		DropdownToggle,
-		DropdownMenu,
-		DropdownItem
-	} from 'sveltestrap';
+	import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'sveltestrap';
 
 	let isOpen = false;
 
@@ -21,7 +15,8 @@
 </script>
 
 <Navbar style="align-self:stretch" color="dark" dark expand="md">
-	<NavbarBrand href="/">Ptero</NavbarBrand>
+	
+	<NavbarBrand href="/"><img src="logoFull30px.png" alt="logo"/></NavbarBrand>
 	<NavbarToggler on:click={() => (isOpen = !isOpen)} />
 	<Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
 		<Nav class="ms-auto" navbar>
@@ -34,15 +29,20 @@
 			<NavItem>
 				<NavLink href="/settings">Settings</NavLink>
 			</NavItem>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Options</DropdownToggle>
-				<DropdownMenu end>
-					<DropdownItem>Option 1</DropdownItem>
-					<DropdownItem>Option 2</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem>Reset</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
 		</Nav>
 	</Collapse>
 </Navbar>
+
+
+<style>
+	section {
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
+		flex-grow: 1;
+		width: 100%;
+		height: 95%;
+		padding: 2em;
+	}
+
+</style>
