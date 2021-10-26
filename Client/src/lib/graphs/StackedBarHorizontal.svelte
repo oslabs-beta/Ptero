@@ -38,6 +38,7 @@
 
 <style>
 	.chart {
+		font-size: 6pt;
 		height: 100%;
 		padding: 0em 0em 3em 10em;
 		margin: 0 0 36px 0;

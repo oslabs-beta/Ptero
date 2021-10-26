@@ -22,13 +22,69 @@ interface LogsResponse {
   fromCache: boolean,
 }
 
-interface CachedvsNotCached {}
-interface DailyData {}
-interface DayRouteTotal {}
-interface Logs {}
-interface ReqPerEndpointAndMethod {}
+interface CachedvsNotCached {
+  cached: number,
+  notCached: number,
+}
+
+interface DailyData {
+  [index: string]: {
+    date?: string,
+    totals: number,
+    id?: string,
+    [route: string]: any,
+  }
+}
+
+interface DayRouteTotal {
+  date: number,
+  route: string,
+  total: number,
+  id: number,
+}
+
+
+// interface DayRouteTotal extends Array<DailyData> {}
+
+interface interfaceReqPerEndpointAndMethod {
+  [index: string]: {
+    route: string,
+    GET: number,
+    POST: number,
+    PUT: number,
+    DELETE: number,
+    id: number,
+    tot: number,
+  }
+}
+interface interfaceReqPerStatus {
+  [index: string]: {
+    status: number,
+    GET: number,
+    POST: number,
+    PUT: number,
+    DELETE: number,
+    id: number,
+    tot: number,
+  }
+}
+
+
 interface ReqPerStatusAndMethod {}
 interface RouteHistory {}
 interface Settings {}
 interface TotalsStatus {}
 
+export type{
+  DayRouteTotal,
+  Logs,
+  LogsResponse,
+  CachedvsNotCached,
+  DailyData,
+  interfaceReqPerEndpointAndMethod,
+  ReqPerStatusAndMethod,
+  RouteHistory,
+  Settings,
+  TotalsStatus,
+  interfaceReqPerStatus,
+}

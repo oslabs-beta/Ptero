@@ -17,24 +17,24 @@
 </script>
 
 <section>
-	<Offcanvas style="background-color:var(--bs-dark)" scroll isOpen={open} {toggle}>
+	<!-- <Offcanvas style="background-color:var(--bs-dark)" scroll isOpen={open} {toggle}>
 		<h1 slot="header">
 			<i>Hello <b>World!</b></i>
 		</h1>
 	</Offcanvas>
 	<Button style="align-self:center; position:absolute; left: 0px" color="danger" on:click={toggle}
 		>O</Button
-	>
+	> -->
 	<div id="graphs">
 		<div class="graph">
 			<h1>Requests per day over the last month</h1>
-			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['lightgreen']} />
+			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['var(--main-color)']} />
 		</div>
 
 		<div class="graph">
 			<h1>Avg cached time against non-cached</h1>
 			<div class="twoNumbers">
-				<div id="cached" style="color:lightgreen">
+				<div id="cached" style="color:var(--main-color)">
 					{$CachedvsNotCached.cached}s
 				</div>
 				<div id="slash">/</div>
@@ -48,7 +48,7 @@
 			<StackedBarHorizontalStatus
 				data={ReqPerStatusAndMethod}
 				split={['GET', 'POST', 'PUT', 'DELETE']}
-				splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+				splitColors={['var(--main-color)', 'yellow', 'orange', 'red']}
 			/>
 		</div>
 		<div class="graph">
@@ -57,7 +57,7 @@
 				<StackedBarHorizontal
 					data={ReqPerEndpointAndMethod}
 					split={['GET', 'POST', 'PUT', 'DELETE']}
-					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+					splitColors={['var(--main-color)', 'yellow', 'orange', 'red']}
 				/>
 			{/if}
 		</div>
@@ -67,7 +67,7 @@
 				<StackedBarHorizontal
 					data={ReqPerEndpointAndMethod}
 					split={['GET', 'POST', 'PUT', 'DELETE']}
-					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+					splitColors={['var(--main-color)', 'yellow', 'orange', 'red']}
 				/>
 			{/if} -->
 		</div>

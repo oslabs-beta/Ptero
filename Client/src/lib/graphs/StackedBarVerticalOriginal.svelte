@@ -31,14 +31,14 @@
 			<div class="grid-line vertical"><span>{value}<span /></span></div>
 		</Pancake.Grid>
 
-		<Pancake.Grid horizontal count={totals.length} let:value let:first>
+		<Pancake.Grid horizontal count={Math.floor(totals.length / 2)} let:value let:first>
 			<span class="x-label">{value}</span>
 			<!-- <span class="x-label">{value}</span> -->
 		</Pancake.Grid>
 
 		{#each stacks as stack, i}
 			{#each stack.values as d}
-				<Pancake.Box y1={d.start} y2={d.end} x1={parseInt(d.i)} x2={parseInt(d.i) + 0.5}>
+				<Pancake.Box y1={d.start - 80} y2={d.end - 80} x1={parseInt(d.i)} x2={parseInt(d.i) + 0.5}>
 					<div class="box" style="background-color: {splitColors[i]}; width:1em" />
 				</Pancake.Box>
 			{/each}
@@ -49,7 +49,7 @@
 <style>
 	.chart {
 		height: 90%;
-		padding: 2em 1em 1em 1em;
+		padding: 1em 1em 2em 1em;
 		margin: 0 0 0px 0;
 	}
 
