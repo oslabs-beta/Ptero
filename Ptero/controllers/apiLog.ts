@@ -1,7 +1,12 @@
-import { RouterContext } from "https://deno.land/x/oak/mod.ts";
-import { APILog } from "../models/APILogModel.ts";
-import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
-import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
+import {
+  Bson,
+  Context,
+  APILog
+} from '../deps.ts';
+// import { RouterContext } from "https://deno.land/x/oak/mod.ts";
+// import { APILog } from "../models/APILogModel.ts";
+// import { Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
+// import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 // retrieve all the logs from the database
 export const getLogs = async (ctx: Context, next: any) => {

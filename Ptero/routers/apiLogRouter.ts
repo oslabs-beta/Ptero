@@ -1,6 +1,12 @@
-import { Router } from "https://deno.land/x/oak/mod.ts";
-import { getLogs, getOneLog } from "../controllers/apiLog.ts"
-import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
+import {
+  getLogs,
+  Router,
+  Context,
+  getOneLog
+} from '../deps.ts';
+// import { Router } from "https://deno.land/x/oak/mod.ts";
+// import { getLogs, getOneLog } from "../controllers/apiLog.ts"
+// import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 const apiLogRouter = new Router();
 

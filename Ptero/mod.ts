@@ -1,3 +1,3 @@
-import { checkApiKey } from "./controllers/apiKey.ts";
-import { caching, checkUser, } from "./utils/middlewares.ts";
-import { logData } from "./utils/dataLogging.ts";
+import { checkApiKey } from "./deps.ts";
+import { caching, checkUser, } from "./deps.ts";
+import { logData } from "./deps.ts";

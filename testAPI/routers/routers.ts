@@ -12,7 +12,7 @@ import {
   getSpecies,
 } from "../controllers/controllers.ts";
 
-import { caching, checkUser } from '../../Ptero/utils/middlewares.ts'
+import { caching, checkUser } from '../../Ptero/deps.ts';
 
 const testRouter = new Router();
 

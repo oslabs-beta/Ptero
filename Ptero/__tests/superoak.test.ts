@@ -1,7 +1,14 @@
-import { Application, Router } from "https://deno.land/x/oak@v9.0.1/mod.ts";
-import { superoak } from "https://x.nest.land/superoak@4.4.0/mod.ts";
-import apiLogRouter from "../routers/apiLogRouter.ts"
-import { getLogs } from "../controllers/apiLog.ts"
+import {
+  Application,
+    Router,
+    superoak,
+    apiLogRouter,
+    getLogs
+} from '../deps.ts';
+// import { Application, Router } from "https://deno.land/x/oak@v9.0.1/mod.ts";
+// import { superoak } from "https://x.nest.land/superoak@4.4.0/mod.ts";
+// import apiLogRouter from "../routers/apiLogRouter.ts"
+// import { getLogs } from "../controllers/apiLog.ts"
 
 const router = new Router();
 router.get("/", (ctx: any) => {

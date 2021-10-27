@@ -8,7 +8,7 @@ import {
 
 import testRouter from "./routers/routers.ts";
 
-import { logData } from '../Ptero/utils/dataLogging.ts'
+import { logData } from '../Ptero/deps.ts';
 
 
 const env = Deno.env.toObject();
