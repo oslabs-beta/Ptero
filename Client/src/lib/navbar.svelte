@@ -15,8 +15,8 @@
 </script>
 
 <Navbar style="align-self:stretch" color="dark" dark expand="md">
-	<img src="favicon.png" alt="logo" style-height:100px/>
-	<NavbarBrand href="/">Ptero</NavbarBrand>
+	
+	<NavbarBrand href="/"><img src="logoFull30px.png" alt="logo"/></NavbarBrand>
 	<NavbarToggler on:click={() => (isOpen = !isOpen)} />
 	<Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
 		<Nav class="ms-auto" navbar>

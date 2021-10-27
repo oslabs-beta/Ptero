@@ -13,10 +13,11 @@
 </script>
 
 <section>
+	<title>Ptero - Welcome to Ptero</title>
 	<div class="overviewWindow">
 		<div class="widget">
 			<h1>Requests per day over the last month</h1>
-			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['lightgreen']} />
+			<StackedBarVerticalOriginal data={DailyData} split={['total']} splitColors={['var(--main-color)']} />
 		</div>
 		<div class="widgetNumbers">
 			{#each $TotalsStatus as status}
@@ -31,7 +32,7 @@
 				<StackedBarHorizontal
 					data={ReqPerEndpointAndMethod}
 					split={['GET', 'POST', 'PUT', 'DELETE']}
-					splitColors={['lightgreen', 'yellow', 'orange', 'red']}
+					splitColors={['var(--main-color)', 'yellow', 'orange', 'red']}
 				/>
 			{/if}
 		</div>
@@ -69,7 +70,7 @@
 		justify-content: stretch;
 		flex-grow: 1;
 		width: 100%;
-		height: 95%;
+		height: 90%;
 	}
 
 	.overviewWindow {
