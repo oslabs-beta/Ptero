@@ -17,6 +17,7 @@
 </script>
 
 <section>
+	<title> Ptero - Graphs </title>
 	<!-- <Offcanvas style="background-color:var(--bs-dark)" scroll isOpen={open} {toggle}>
 		<h1 slot="header">
 			<i>Hello <b>World!</b></i>
