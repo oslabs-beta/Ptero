@@ -54,7 +54,7 @@ const reqPerEndpointAndMethodFn = async (tempLogs, ReqPerEndpointAndMethod) => {
     element.id = index + 1;
   });
   await ReqPerEndpointAndMethod.set(tempIndexBars);
-  console.log(tempIndexBars);
+  // console.log(tempIndexBars);
   return;
 };
 
@@ -95,7 +95,7 @@ const reqPerStatusAndMethodProcess = async (
     element.id = index + 1;
   });
   await ReqPerStatusAndMethod.set(tempStatusObj);
-  console.log(tempStatusObj);
+  // console.log(tempStatusObj);
   return;
 };
 
@@ -212,7 +212,7 @@ const RouteHistoryProcess = async (tempLogs, RouteHistory) => {
     DailyCallsPerRoute.push(currentObj);
   }
   RouteHistory.set(DailyCallsPerRoute);
-  console.log(DailyCallsPerRoute);
+  // console.log(DailyCallsPerRoute);
   return;
 };
 
