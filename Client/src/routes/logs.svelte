@@ -6,6 +6,7 @@ import LogLine from '$lib/graphs/LogLine.svelte';
 </script>
 
 <section>
+	<title>Ptero - Logs</title>
 	<Table dark>
 		<thead>
 			<tr>

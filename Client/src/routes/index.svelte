@@ -13,6 +13,7 @@
 </script>
 
 <section>
+	<title>Ptero - Welcome to Ptero</title>
 	<div class="overviewWindow">
 		<div class="widget">
 			<h1>Requests per day over the last month</h1>
