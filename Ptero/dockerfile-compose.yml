@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  # server_mongo_database:
+  #   image: mongo:4.2
+  #   container_name: server_mongo_database
+  #   env_file:
+  #     - ../.env_development
+  #   volumes:
+  #     - ./data:/data/db
+  #   restart: always
+  #   ports:
+  #     - "27017:27017"
+
+  server_redis_database:
+    image: redis
+    container_name: server_redis
+    # env_file:
+    #   - ../.env_development
+    volumes:
+      - ./redis_data:/data
+    command: 'redis-server'
+    restart: always
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: pterots
+  #     MONGO_INITDB_ROOT_PASSWORD: pterots
+  #   ports: '27017'
+
+  server_api:
+    container_name: server_deno
+    image: pterots/test
+    volumes:
+      - "./:/app"
+    command: "deno test --allow-all --unstable __tests/redis.test.ts"
+    depends_on:
+      - "server_redis_database"
+    ports:
+      - "9000:9000"

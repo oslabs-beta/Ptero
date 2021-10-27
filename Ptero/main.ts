@@ -1,10 +1,13 @@
-import { Application, Router, RouterContext } from "https://deno.land/x/oak/mod.ts";
-import { logData } from "./utils/dataLogging.ts";
-import { oakCors } from "https://deno.land/x/cors/mod.ts";
-import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
-import pteroRouter from "./routers/routers.ts";
-import apiLogRouter from "./routers/apiLogRouter.ts";
-import userRouter from "./routers/userRouter.ts";
+import {
+  Application, Router, logData, oakCors, Context, pteroRouter, apiLogRouter, userRouter
+} from './deps.ts';
+// import { Application, Router, RouterContext } from "https://deno.land/x/oak/mod.ts";
+// import { logData } from "./utils/dataLogging.ts";
+// import { oakCors } from "https://deno.land/x/cors/mod.ts";
+// import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
+// import pteroRouter from "./routers/routers.ts";
+// import apiLogRouter from "./routers/apiLogRouter.ts";
+// import userRouter from "./routers/userRouter.ts";
 const env = Deno.env.toObject();
 const PORT = env.PORT || 9000;
 const HOST = env.HOST || "localhost";

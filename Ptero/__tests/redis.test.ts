@@ -1,11 +1,18 @@
-import { connect as redisConnect } from "https://deno.land/x/redis/mod.ts";
-import { assertEquals } from "https://deno.land/std@0.110.0/testing/asserts.ts";
-import { redisSet, redisSetUser } from "../utils/redis.ts";
-import { delay } from "https://deno.land/std/async/mod.ts";
+import {
+    redisConnect,
+    assertEquals,
+    redisSet,
+    redisSetUser,
+    delay
+} from '../deps.ts';
+// import { connect as redisConnect } from "https://deno.land/x/redis/mod.ts";
+// import { assertEquals } from "https://deno.land/std@0.110.0/testing/asserts.ts";
+// import { redisSet, redisSetUser } from "../utils/redis.ts";
+// import { delay } from "https://deno.land/std/async/mod.ts";
 
 // start redis
 const redisClient = await redisConnect({
-  hostname: "127.0.0.1",
+  hostname: "server_redis_database",
   port: 6379,
 });
 
@@ -18,7 +25,7 @@ Deno.test("Check if redis database is connected", async () => {
 });
 // test if can add object to redis
 Deno.test("Adds data to the redis cache", async () => {
-  const ctx = { request: { url: { pathname: "key1" } }, 
+  const ctx:any = { request: { url: { pathname: "key1" } }, 
                 response: { body: "redis tester" } };
   await redisSet(ctx, 2);
   
@@ -37,9 +44,10 @@ Deno.test("Adds data to the redis cache", async () => {
 });
 
 Deno.test("Adds user to the redis cache", async () => {
-  const ctx = { request: { headers: { api_key: "9999" } }, 
+  let newHeaders = new Headers({api_key: "9999"});
+  const ctx = { request: { headers: newHeaders }, 
                 response: { body: "user tester" } };
-  await redisSetUser(ctx, 2); 
+  await redisSetUser(ctx, 2);
   
   let data = await redisClient.get("9999");
 

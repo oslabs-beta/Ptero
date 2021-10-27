@@ -1,6 +1,9 @@
-import { v4 } from "https://deno.land/std/uuid/mod.ts";
-import { Dinosaur } from "../types/types.ts";
-import { Dinosaurs } from "../models/dinosaurs.ts";
+import {
+  v4, Dinosaur, Dinosaurs
+} from '../deps.ts';
+// import { v4 } from "https://deno.land/std/uuid/mod.ts";
+// import { Dinosaur } from "../types/types.ts";
+// import { Dinosaurs } from "../models/dinosaurs.ts";
 
 // get all the dinosaurs
 const getDinosaurs = async ({ response }: { response: any }) => { 
