@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import * as Pancake from '@sveltejs/pancake';
 
 	export let route;
@@ -140,4 +140,4 @@
 		display: block;
 		font-size: 14px;
 	}
-</style>
+</style> -->

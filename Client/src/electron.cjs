@@ -4,10 +4,6 @@ const { app, BrowserWindow } = require('electron');
 const serve = require('electron-serve');
 const { fork } = require('child_process');
 
-// require('../.svelte-kit/build/app');
-// const exec = require('child_process').exec;
-// const cmd2 = 'npm run svelte-kit dev';
-
 try {
 	require('electron-reloader')(module);
 } catch (e) {

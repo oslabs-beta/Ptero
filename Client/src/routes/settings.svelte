@@ -47,11 +47,7 @@
 							placeholder={$Settings.refreshRate}
 						/>
 						{$Settings.refreshRate}<br /><br />
-						<button 
-						id="refreshButton"
-						on:click={fetchLogs}
-						>
-						Refresh</button>
+						<button id="refreshButton" on:click={fetchLogs}> Refresh</button>
 					</div>
 				</div>
 			</TabPane>

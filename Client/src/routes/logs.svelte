@@ -1,7 +1,6 @@
 <script>
 	import { Table } from 'sveltestrap';
 	import { Logs } from '$lib/store.ts';
-import LogLine from '$lib/graphs/LogLine.svelte';
 	
 </script>
 

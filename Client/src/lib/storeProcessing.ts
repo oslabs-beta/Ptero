@@ -19,13 +19,11 @@ const totalsPerStatus = async (tempLogs: Logs[], TotalsStatus) => {
     if (!totalsPerStatusObj[el.status]) totalsPerStatusObj[el.status] = 0;
     totalsPerStatusObj[el.status] += 1;
   });
-  // console.log(tempStatusTotals);
   for (const status in totalsPerStatusObj) {
     const temp: any = {};
     temp[status] = totalsPerStatusObj[status];
     totalsPerStatusArr.push(temp);
   }
-  // console.log(tempStatus);
   TotalsStatus.set(totalsPerStatusArr);
   return;
 };
@@ -64,7 +62,6 @@ const reqPerEndpointAndMethodFn = async (tempLogs: Logs[], ReqPerEndpointAndMeth
     element.id = index + 1;
   });
   await ReqPerEndpointAndMethod.set(tempIndexBars);
-  // console.log(tempIndexBars);
   return;
 };
 
@@ -107,7 +104,7 @@ const reqPerStatusAndMethodProcess = async (
     element.id = index + 1;
   });
   await ReqPerStatusAndMethod.set(tempStatusObj);
-  // console.log(tempStatusObj);
+  
   return;
 };
 
