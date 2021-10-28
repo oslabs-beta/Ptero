@@ -1,16 +1,19 @@
 {
 	"compilerOptions": {
+		"module": "esnext",
+		"target": "es2020",
 		"moduleResolution": "node",
-		"module": "es2020",
-		"lib": ["es2020", "DOM"],
-		"target": "es2019",
+		"strict": true,
+		"types": ["vite/client", "node"],
+		"typeRoots": ["node_modules/@types"],
+		"lib": ["ESNext"],
+		// "target": "es2018",
 		/**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
 			to enforce using \`import type\` instead of \`import\` for Types.
 			*/
 		"importsNotUsedAsValues": "error",
 		"isolatedModules": true,
-		"resolveJsonModule": true,
 		/**
 			To have warnings/errors of the Svelte compiler at the correct position,
 			enable source maps by default.
@@ -21,12 +24,14 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
 		"allowJs": true,
-		"checkJs": true,
+		"checkJs": false,
 		"paths": {
-			"$lib": ["src/lib"],
+			"$app/*": [".svelte/dev/runtime/app/*", ".svelte/build/runtime/app/*"],
 			"$lib/*": ["src/lib/*"],
-			"$static/*":["static/*"]
+			"@components": ["src/lib/components"],
+			"@lib": ["src/lib"],
+			"@utils": ["src/lib/utils"],
 		}
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte", "src/electron.js"]
 }

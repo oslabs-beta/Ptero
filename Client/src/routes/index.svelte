@@ -1,9 +1,3 @@
-<!-- Refactoring Tracker 
-  Console.log
-  Bad comments
-  Add Good comments
-  Rename functions
-  Clean layout -->
 <script context="module">
 	import Card from '$lib/graphs/card.svelte';
 	import { Logs, TotalsStatus, ReqPerEndpointAndMethod, DailyData } from '$lib/store';
@@ -118,6 +112,5 @@
 	}
 	.numbers {
 		flex-grow: 1;
-		/* background-color: var(--bs-light); */
 	}
 </style>

@@ -7,7 +7,7 @@
   ### Application, middleware, and context
   The Ptero application coordinates the data logging and redis caching for one's Deno based API. The deno module would have to be loaded into the top of all of the API owners files that will be using the module as outlined below.
   ```js
-  import { caching, userCaching, logData } from "https://deno.land/x/ptero/mod.ts";
+  import { caching, userCaching, logData } from "https://deno.land/x/ptero";
   ```
 ## Data Logging
 Every request to the server will be logged in designated cloud database. Then the web or Electron application of Ptero will retrieve log data from the database and allow visualization of the data with a user-friendly interface. In order to enable data logging, add the following lines of code in your main server file. For more information see [PteroView](../Client/README.md).

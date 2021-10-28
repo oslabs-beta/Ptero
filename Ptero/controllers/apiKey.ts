@@ -2,8 +2,6 @@ import {
   Users,
   Context
 } from '../deps.ts';
-// import { Users } from "../models/users.ts";
-// import { Context }   from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 // checking if the api key exists in the database
 export const checkApiKey = async (ctx: Context) => {

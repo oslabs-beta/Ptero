@@ -7,7 +7,6 @@ import { superoak } from "https://x.nest.land/superoak@4.4.0/mod.ts";
 import { MongoClient, Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
-// import { RouterContext } from "https://deno.land/x/oak/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 //from within Ptero
