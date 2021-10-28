@@ -1,4 +1,6 @@
 /Client/node_modules/
 /Client/public/build/
+/Client/dist/
 
 .DS_Store
+.env

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	export let method;
 	export let route;
 	export let status;
@@ -48,4 +48,4 @@
 	.cached {
 		width: 10%;
 	}
-</style>
+</style> -->

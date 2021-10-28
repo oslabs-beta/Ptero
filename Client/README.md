@@ -8,6 +8,7 @@
 | -------  | ------------------------------------------- |
 |  Install |  <code>npm install</code>                   |
 |  Develop |  <code>npm run dev</code>                   |
+|  Develop |  <code>npm run dev:svelte</code>            |
 |  Build   |  <code>npm run build</code>                 |
 
 

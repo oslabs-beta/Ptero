@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	const rows = [
 		{ id: 1, first_name: 'Marilyn', last_name: 'Monroe', gender: 'female' },
 		{ id: 2, first_name: 'Abraham', last_name: 'Lincoln', gender: 'male' },
@@ -103,4 +103,4 @@
 			filterOptions: ['male', 'female'] // provide array
 		}
 	];
-</script>
+</script> -->

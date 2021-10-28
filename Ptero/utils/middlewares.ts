@@ -5,12 +5,10 @@ exists in the cache. If the data is in the cache, information will be pulled fro
 of requesting to the route. Retrieving information from the cache will accerate the whole process of acquiring the data.
 You will be able to see the response time difference between when data is accessed from the cache and when they is pulled from the actual route.
 */
+
 import {
   redisCheck, redisCheckUser, redisSet, redisSetUser, Context
 } from '../deps.ts';
-
-// import { redisCheck, redisCheckUser, redisSet, redisSetUser, } from "../utils/redis.ts";
-// import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts";
 
 // checking if data is in Redis cache via redisCheck funciton and if not storing data in to Redis cache via redisCheck function
 export const caching = async (ctx: any, func: any) => {
