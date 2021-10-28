@@ -1,4 +1,4 @@
-import { Dinosaur } from "../types/types.ts";
+import { Dinosaur } from "../deps.ts";
 
 export const Dinosaurs: Array<Dinosaur> = [
   {

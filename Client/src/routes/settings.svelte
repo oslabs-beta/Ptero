@@ -4,6 +4,7 @@
 </script>
 
 <section>
+	<title>Ptero - Settings</title>
 	<div id="settingsWindow">
 		<TabContent vertical>
 			<TabPane

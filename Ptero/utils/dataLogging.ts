@@ -4,7 +4,7 @@ These functinos will allow the API host to visualize all the requests in the ser
 If additional information is desired from these logs, simply add variables that you want to monitor and retrieve the appropriate
 information from the request and response. 
 */
-import { addLog } from "../controllers/apiLog.ts";
+import { addLog } from "../deps.ts";
 
 export const logData = async (ctx: any, next: any) => {
   // Time Logger

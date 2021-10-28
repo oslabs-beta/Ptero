@@ -1,0 +1,66 @@
+language: default
+os: linux
+services:
+    - redis-server
+    # can change to redis and the database and whatever else if needed
+branches:
+    only:
+    - main
+    # can also set to testing in dev if needed
+# installs deno:
+before_install:
+    - pwd
+    # can change curl cmd to another install?
+    - curl -fsSL https://deno.land/x/install/install.sh | sh
+    - ls -l $HOME/.deno
+    - export DENO_INSTALL="$HOME/.deno"
+    - export PATH="$DENO_INSTALL/bin:$PATH"
+    - deno run https://deno.land/std/examples/welcome.ts   
+      # this will run the deno hello world home page to ensure it's working
+# insert tests from ptero!:
+script: 
+    - cd ./simplecalc/test/
+    - sh run_test.sh
+    - cd ../../fortune_cookies/test
+    - sh run_test.sh
+
+
+# matrix:
+#   include:
+#     - os: osx
+#       osx_image: xcode10.2
+#       language: node_js
+#       node_js: "10"
+#       env:
+#         - ELECTRON_CACHE=$HOME/.cache/electron
+#         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+#     - os: linux
+#       services: docker
+#       language: generic
+
+# cache:
+#   directories:
+#     - node_modules
+#     - $HOME/.cache/electron
+#     - $HOME/.cache/electron-builder
+
+# script:
+#   - |
+#     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+#       docker run --rm \
+#         --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
+#         -v ${PWD}:/project \
+#         -v ~/.cache/electron:/root/.cache/electron \
+#         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+#         electronuserland/builder:wine \
+#         /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn release --linux --win"
+#     else
+#       yarn release
+#     fi
+# before_cache:
+#   - rm -rf $HOME/.cache/electron-builder/wine
+
+# branches:
+#   except:
+#     - "/^v\\d+\\.\\d+\\.\\d+$/"

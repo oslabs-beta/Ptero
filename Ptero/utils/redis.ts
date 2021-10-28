@@ -1,5 +1,6 @@
-import { redisClient } from "../models/redisClient.ts";
-import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
+import { redisClient, Context } from '../deps.ts';
+// import { redisClient } from "../models/redisClient.ts";
+// import { Context } from "https://deno.land/x/oak@v9.0.1/context.ts"
 
 /* 
 This is constant variable that determines the expiration time of the data stored in cache (time-to-live).
