@@ -1,4 +1,4 @@
-# Welcome to Ptero !!
+# Welcome to Ptero!!
 There is currently no end-to-end solution to accelerate and monitor Deno built APIs. Ptero is a Deno built middleware application that allows API owners to get user information from their API as well as adding a Redis caching system to the API. 
 
 ![image of solution](/Ptero/images/soluntion.png)
@@ -19,7 +19,7 @@ Ptero allows data
 ### To Get Started:
 #### If you have not already installed or updated Deno:
 - [ ] Install deno: https://github.com/denoland/deno_install
-- [ ] Update if not sure of version: type <code>deno upgrade </code> in your terminal.
+- [ ] Update if not sure of version: type <code>deno upgrade</code> in your terminal.
 
 ## Contributors
 - [Quentin Rousset](https://github.com/qrousset/)
