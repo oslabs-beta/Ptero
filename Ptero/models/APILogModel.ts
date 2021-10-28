@@ -3,8 +3,7 @@ import {
     Bson,
     config
 } from '../deps.ts';
-// import { MongoClient, Bson } from "https://deno.land/x/mongo@v0.27.0/mod.ts";
-// import { config } from "https://deno.land/x/dotenv/mod.ts";
+
 const { DB_HOST_URL_LOG, DB_NAME_LOG } = config()
 
 // host url and database name is pulled from .env file
