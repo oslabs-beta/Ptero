@@ -1,0 +1,14 @@
+{
+	"appId": "Ptero",
+	"productName": "Ptero",
+	"directories": {
+		"output": "dist"
+	},
+	"files": [
+		"src/electron.cjs",
+		{
+			"from": "build",
+			"to": ""
+		}
+	]
+}
